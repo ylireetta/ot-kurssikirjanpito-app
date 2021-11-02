@@ -1,0 +1,96 @@
+ylireett@lx1-fuxi041:~/kurssit/ohjelmistotekniikka/ot_viikko1/tiedostoja$ git log --stat | cat
+commit 56fa535c4cbf1ff62cf06091857e7f764ca3755a
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:40:39 2021 +0200
+
+    viikko 1 harjoittelua
+
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit d8972dad270ede051db753654ba2124efcb845ee
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:36:37 2021 +0200
+
+    uusi hakemisto ja sen tiedostot
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 77928a96f78a591101b797ca92323387f74c76a1
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:33:38 2021 +0200
+
+    sisältöjä muutettu ja testattu git add -p
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 1272531b6f02c90859634bc841c3c137de649f04
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:32:00 2021 +0200
+
+    tiedosto.txt nimetty uudelleen eka.txt
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f7175c6e16c81b79a646fca8040af72e74e9a273
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:30:39 2021 +0200
+
+    toinen.txt poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit f50f6112906e7bce3d6aac629410ccf22e8c2ecf
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:29:16 2021 +0200
+
+    lisätty uusi hakemisto sisältöineen
+
+ stuff/uusitiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit fbeb02f0cee0d7735026320c4862f0ef38009127
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:28:11 2021 +0200
+
+    toista ja kolmatta muutettu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 04bd9f00693ff55bd6e15f4d3ec665d303f65d1c
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:27:01 2021 +0200
+
+    kolmas tiedosto lisätty
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a5b4a1bd6bff41b1868972632ecde8f3e2b24432
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:26:10 2021 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 88a0367356915d3e1525d5c44468c25d0f38305f
+Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
+Date:   Tue Nov 2 13:25:17 2021 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
