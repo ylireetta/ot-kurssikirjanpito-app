@@ -1,4 +1,3 @@
-ylireett@lx1-fuxi041:~/kurssit/ohjelmistotekniikka/ot_viikko1/tiedostoja$ git log --stat | cat
 commit 56fa535c4cbf1ff62cf06091857e7f764ca3755a
 Author: Reetta Ylitalo <reetta.k.ylitalo@helsinki.fi>
 Date:   Tue Nov 2 13:40:39 2021 +0200
