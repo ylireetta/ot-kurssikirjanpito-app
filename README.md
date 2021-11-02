@@ -8,3 +8,5 @@ Pakko testata vielä emojeita. :cowboy_hat_face: :clown_face:
 [komentorivi.txt](https://github.com/ylireetta/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
 [gitlog.txt](https://github.com/ylireetta/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+
+Tehdään konflikti
