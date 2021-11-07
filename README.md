@@ -9,4 +9,6 @@ Pakko testata vielä emojeita. :cowboy_hat_face: :clown_face:
 
 [gitlog.txt](https://github.com/ylireetta/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
+[vaatimusmaarittely.md](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+
 Tehdään konflikti
