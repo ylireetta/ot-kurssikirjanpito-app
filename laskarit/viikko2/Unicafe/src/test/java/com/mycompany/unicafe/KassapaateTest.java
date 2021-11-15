@@ -226,4 +226,6 @@ public class KassapaateTest {
         assertTrue(this.kassa.kassassaRahaa() == 100000);
     }
     
+    // </editor-fold>
+    
 }
