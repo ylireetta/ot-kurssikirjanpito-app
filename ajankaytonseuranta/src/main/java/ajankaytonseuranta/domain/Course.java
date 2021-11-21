@@ -24,6 +24,13 @@ public class Course {
     private long timeSpent;
     private ObjectId userId;
     
+    public Course() {
+        this.name = null;
+        this.credits = 0;
+        this.timeSpent = 0;
+        this.userId = null;
+    }
+    
     public Course(String name, int credits, ObjectId userId) {
         this.name = name;
         this.credits = credits;

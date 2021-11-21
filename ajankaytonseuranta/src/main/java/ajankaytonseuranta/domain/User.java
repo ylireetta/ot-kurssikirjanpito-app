@@ -19,6 +19,11 @@ public class User {
     @Id
     private ObjectId userId;
     
+    // Dummy constructor so that morphia mapping won't fail
+    public User() {
+        this.username = null;
+    }
+    
     public User(String username){
         this.username = username;
     }
