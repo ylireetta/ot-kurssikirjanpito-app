@@ -34,7 +34,7 @@ public class TimeManagementServiceTest {
     }
     
     @Test
-    public void existingUserserIsFound() {
+    public void existingUserIsFound() {
         tmService.createUser("TestUser");
         assertTrue(tmService.userExists("TestUser"));
     }

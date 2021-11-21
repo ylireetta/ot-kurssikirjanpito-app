@@ -265,7 +265,10 @@ public class AjankaytonseurantaUi extends Application {
         
         try {
             int converted = Integer.parseInt(text);
-            return true;
+            if (converted < 0)
+                return false;
+            else
+                return true;
         } catch (Exception e) {
             return false;
         }
