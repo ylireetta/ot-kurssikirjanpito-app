@@ -11,4 +11,5 @@ ma 15.11.|3|Kurssien hakeminen ja tallentaminen, ulkoasun muokkaus
 ke 17.11.|5|Ulkoasu, kurssien hakeminen kannasta ja yleinen viilaus. Testien kanssa tappeleminen
 to 18.11.|3|Testit, kurssiin käytetyn ajan päivittäminen kantaan
 su 21.11.|3|Etätyöpöytätestaus, mapping exceptionit ja niiden selvittely
+ma 22.11.|0.5|Loggerin aiheuttamat hämmingit pois konsolista
 |yht||
