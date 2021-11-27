@@ -5,6 +5,8 @@
  */
 package ajankaytonseuranta.domain;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -20,4 +22,11 @@ public class UserTest {
         
         assertTrue(u1.equals(u2));
     }
+    
+    @Test
+    public void dummyConstructorWorks() {
+        User user = new User();
+        assertNull(user.getUsername());
+    }
+    
 }

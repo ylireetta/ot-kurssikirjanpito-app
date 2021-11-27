@@ -7,6 +7,7 @@ package ajankaytonseuranta.dao;
 
 import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.User;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
@@ -82,6 +83,10 @@ public class FakeCourseDao implements CourseDao {
     @Override
     public void setTimeSpentForCourse(ObjectId courseId, long timeSpent) {
         
+    }
+    
+    public void deleteTestData() {
+        store.getCollection(Course.class).deleteMany(new BasicDBObject());
     }
     
 }

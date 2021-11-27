@@ -24,23 +24,38 @@ public class ConcreteUserDao implements UserDao {
     private Datastore store;
     private List<User> userlist;
     
-    public ConcreteUserDao() throws Exception {
-        this.store = createConnection();
+    // Dummy constructor
+    public ConcreteUserDao() {
+        store = null;
+        userlist = null;
+    }
+    
+    public ConcreteUserDao(boolean testmode) throws Exception {
+        this.store = createConnection(testmode);
         this.userlist = getUsersFromDb();
     }
     
-    private Datastore createConnection() throws Exception {
+    private Datastore createConnection(boolean testmode) throws Exception {
         Properties properties = new Properties();
         properties.load(new FileInputStream("config.properties"));
         
-        String dbAddress = properties.getProperty("dbAddress");
-        String datastoreName = properties.getProperty("datastoreName");
-        String datastoreMapper = properties.getProperty("datastoreMapper");
+        String dbAddress = "";
+        String datastoreName = "";
+        String datastoreMapper = "";
+        
+        if (testmode) {
+            dbAddress = properties.getProperty("testDbAddress");
+            datastoreName = properties.getProperty("testDatastoreName");
+            datastoreMapper = properties.getProperty("testDatastoreMapper");
+        } else {
+            dbAddress = properties.getProperty("dbAddress");
+            datastoreName = properties.getProperty("datastoreName");
+            datastoreMapper = properties.getProperty("datastoreMapper");
+        }
         
         MongoClient mc = MongoClients.create(dbAddress);
         Datastore store = Morphia.createDatastore(mc, datastoreName);
         store.getMapper().mapPackage(datastoreMapper);
-        
         
         return store;
     }

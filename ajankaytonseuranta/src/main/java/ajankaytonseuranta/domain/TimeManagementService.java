@@ -3,6 +3,7 @@ package ajankaytonseuranta.domain;
 import ajankaytonseuranta.dao.CourseDao;
 import ajankaytonseuranta.dao.UserDao;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.bson.types.ObjectId;
 
 /**
@@ -39,9 +40,10 @@ public class TimeManagementService {
     }
     
     public boolean userExists(String username) {
-        if (userDao.findByUsername(username) != null)
+        if (userDao.findByUsername(username) != null) {
             return true;
-        
+        }
+            
         return false;
     }
     
@@ -88,10 +90,15 @@ public class TimeManagementService {
         courseDao.setTimeSpentForCourse(courseId, timeSpentTotal);
     }
     
-    private double convertTimeSpent(long millis) {
-        // For display purposes?
+    public String convertTimeSpent(Course course) {
+        // For display purposes
+        long timeSpentInMillis = course.getTimeSpent();
         
-        return 0;
+        String ret = String.format("%02d minuuttia, %02d sekuntia", 
+                TimeUnit.MILLISECONDS.toMinutes(timeSpentInMillis), 
+                TimeUnit.MILLISECONDS.toSeconds(timeSpentInMillis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeSpentInMillis)));
+        
+        return ret;
     }
     
 }

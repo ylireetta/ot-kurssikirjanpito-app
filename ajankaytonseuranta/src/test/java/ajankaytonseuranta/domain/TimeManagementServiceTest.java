@@ -106,6 +106,7 @@ public class TimeManagementServiceTest {
     @After
     public void teardown() {
         userDao.deleteTestData();
+        courseDao.deleteTestData();
     }
     
 }

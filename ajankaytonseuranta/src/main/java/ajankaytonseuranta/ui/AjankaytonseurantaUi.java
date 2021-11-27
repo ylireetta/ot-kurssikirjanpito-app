@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import ajankaytonseuranta.domain.TimeManagementService;
@@ -26,6 +25,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.bson.types.ObjectId;
@@ -34,6 +34,8 @@ import org.bson.types.ObjectId;
  * @author ylireett
  */
 public class AjankaytonseurantaUi extends Application {
+    // Testmode helps with junit tests when creating ConcreteUserDao
+    private final boolean testmode = false;
     private Stage mainStage;
     private TimeManagementService tmService;
     
@@ -41,10 +43,11 @@ public class AjankaytonseurantaUi extends Application {
     private ComboBox courseList = new ComboBox();
     
     private long timerStartTime;
+    private boolean timerRunning = false;
     
     @Override
     public void init() throws Exception {
-        UserDao userDao = new ConcreteUserDao();
+        UserDao userDao = new ConcreteUserDao(testmode);
         CourseDao courseDao = new ConcreteCourseDao(loggedInUser);
         
         tmService = new TimeManagementService(userDao, courseDao);
@@ -53,6 +56,8 @@ public class AjankaytonseurantaUi extends Application {
     @Override
     public void start(Stage window) {
         mainStage = window;
+        mainStage.setMaxWidth(500);
+        mainStage.setResizable(false);
         
         // Main scene
         BorderPane mainLayout = drawMainScene();
@@ -60,25 +65,33 @@ public class AjankaytonseurantaUi extends Application {
         // Setup main scene
         Scene scene = new Scene(mainLayout);
         
-        window.setTitle("Hello application");
+        window.setTitle("Kurssien ajankäytön seuranta");
         window.setScene(scene);
         window.show();
     }
     
     public BorderPane drawMainScene() {
         BorderPane mainLayout = new BorderPane();
-        HBox buttonLayout = new HBox();
-        buttonLayout.setSpacing(10);
+        mainLayout.setPadding(new Insets(10, 10, 10, 10));
+        
+        // Buttons
+        TilePane buttonPane = new TilePane();
+        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setHgap(10);
         
         Label info = new Label();
         
         TextField username = new TextField();
         username.setPromptText("Käyttäjätunnus");
         username.setFocusTraversable(false);
+        username.setMaxWidth(200);
         
         Button loginBtn = new Button("Kirjaudu sisään");
+        loginBtn.setMaxWidth(Double.MAX_VALUE);
         Button createNewUserBtn = new Button("Luo uusi käyttäjä");
+        createNewUserBtn.setMaxWidth(Double.MAX_VALUE);
         Button finishBtn = new Button("Sulje");
+        finishBtn.setMaxWidth(Double.MAX_VALUE);
         
         loginBtn.setOnAction((event) -> {
             String name = username.getText();
@@ -114,12 +127,12 @@ public class AjankaytonseurantaUi extends Application {
             mainStage.close();
         });
         
-        buttonLayout.getChildren().addAll(loginBtn, createNewUserBtn, finishBtn);
+        buttonPane.getChildren().addAll(loginBtn, createNewUserBtn, finishBtn);
         
         mainLayout.setTop(info);
         mainLayout.setAlignment(info, Pos.TOP_CENTER);
         mainLayout.setCenter(username);
-        mainLayout.setBottom(buttonLayout);
+        mainLayout.setBottom(buttonPane);
         
         return mainLayout;
     }
@@ -147,6 +160,9 @@ public class AjankaytonseurantaUi extends Application {
         courseList.setCellFactory(factory);
         
         logOutBtn.setOnAction((event) -> {
+            if (timerRunning) {
+                updateSpentTimeToDb();
+            }
             tmService.logout();
             loggedInUser = tmService.getLoggedInUser();
             mainStage.getScene().setRoot(drawMainScene());
@@ -170,10 +186,12 @@ public class AjankaytonseurantaUi extends Application {
             startTimerBtn.setVisible(false);
             stopTimerBtn.setVisible(true);
             // Start timer
+            timerRunning = true;
             timerStartTime = System.currentTimeMillis();
         });
         
         stopTimerBtn.setOnAction((event) -> {
+            timerRunning = false;
             startTimerBtn.setVisible(true);
             stopTimerBtn.setVisible(false);
             
@@ -184,20 +202,18 @@ public class AjankaytonseurantaUi extends Application {
         });
         
         // Event handler for course combobox selection change
-        EventHandler<ActionEvent> event =
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        if (loggedInUser != null && courseList.getSelectionModel().getSelectedItem() != null) {
-                            try {
-                                startTimerBtn.setVisible(true);
-                                courseInfoFromDb.setText(refreshCourseInfo());
-                            } catch (Exception ex) {
-                                System.out.println("Jokin meni vikaan.");
-                            }    
-                        }
-                        
-                    }
-                };
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (loggedInUser != null && courseList.getSelectionModel().getSelectedItem() != null) {
+                    try {
+                        startTimerBtn.setVisible(true);
+                        courseInfoFromDb.setText(refreshCourseInfo());
+                    } catch (Exception ex) {
+                        System.out.println("Jokin meni vikaan.");
+                    }    
+                }
+            }
+        };
         
         courseList.setOnAction(event);
         
@@ -231,6 +247,14 @@ public class AjankaytonseurantaUi extends Application {
         
         Label courseInfo = new Label("Syötä lisättävän kurssin tiedot.");
         
+        Label instructions = new Label("");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ohjeet:\n\n");
+        sb.append("- Anna kurssin nimi\n");
+        sb.append("- Anna kurssin opintopisteet positiivisena kokonaislukuna\n\n");
+        sb.append("Esim. Ohjelmistotekniikka 5");
+        instructions.setText(sb.toString());
+        
         addCourseBtn.setOnAction((event) -> {
             if (!courseName.getText().equals("") && isInteger(courseCredit.getText())) {
                 Course newCourse = new Course(courseName.getText(), Integer.parseInt(courseCredit.getText()), loggedInUser.getUserId());
@@ -241,12 +265,13 @@ public class AjankaytonseurantaUi extends Application {
                 courseName.setText("");
                 courseCredit.setText("");
             } else {
-                courseInfo.setText("Tarkista syöte - kurssilla on oltava nimi, ja opintopisteet tulee syöttää kokonaislukumuodossa.");
+                courseInfo.setText("Tarkista syöte.");
                 courseInfo.setTextFill(Color.RED);
             }
         });
         
-        
+        newCourseGrid.setHgap(10);
+        newCourseGrid.setVgap(10);
         newCourseGrid.add(courseInfo, 1, 0);
         newCourseGrid.add(courseNameLabel, 0, 1);
         newCourseGrid.add(courseName, 1, 1);
@@ -256,19 +281,24 @@ public class AjankaytonseurantaUi extends Application {
         newCourseGrid.add(addCourseBtn, 0, 4);
         newCourseGrid.add(returnBtn, 1, 4);
         
+        newCourseGrid.add(instructions, 2, 0);
+        newCourseGrid.setRowSpan(instructions, newCourseGrid.REMAINING);
+        
         return newCourseGrid;
     }
     
     public boolean isInteger(String text) {
-        if (text == null)
+        if (text == null) {
             return false;
+        }
         
         try {
             int converted = Integer.parseInt(text);
-            if (converted < 0)
+            if (converted < 0) {
                 return false;
-            else
+            } else {
                 return true;
+            }
         } catch (Exception e) {
             return false;
         }
@@ -278,8 +308,9 @@ public class AjankaytonseurantaUi extends Application {
     public void redrawCourseList() {
         courseList.getItems().clear();
         
-        if (loggedInUser != null)
+        if (loggedInUser != null) {
             courseList.setItems(FXCollections.observableArrayList(tmService.getCoursesForLoggedInUser()));
+        }
     }
     
     public String refreshCourseInfo() {
@@ -287,9 +318,25 @@ public class AjankaytonseurantaUi extends Application {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Kurssin nimi: %1$s \n", selectedCourse.getCourseName()));
         sb.append(String.format("Opintopisteet: %1$s \n", selectedCourse.getCourseCredits()));
-        sb.append(String.format("Aikaa käytetty: %1$s \n", selectedCourse.getTimeSpent()));
+        sb.append(String.format("Aikaa käytetty: %1$s \n", tmService.convertTimeSpent(selectedCourse)));
                             
         return sb.toString();
+    }
+    
+    public void updateSpentTimeToDb() {
+        ObjectId selectedCourseId = ((Course) courseList.getSelectionModel().getSelectedItem()).getCourseId();
+        System.out.println(String.format("Päivitetään käytetty aika kurssille id %1$s...", selectedCourseId));
+        System.out.println("---------------");
+        tmService.setTimeSpentForCourse(selectedCourseId, timerStartTime, System.currentTimeMillis());
+        System.out.println(String.format("Käytetty aika päivitetty kurssille id %1$s.", selectedCourseId));
+    }
+    
+    @Override
+    public void stop() {
+        // If timer is running and program is closed while user is logged in, update time to db
+        if (loggedInUser != null && timerRunning) {
+            updateSpentTimeToDb();
+        }
     }
     
     public static void main(String[] args) {

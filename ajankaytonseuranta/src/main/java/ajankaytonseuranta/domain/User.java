@@ -24,7 +24,7 @@ public class User {
         this.username = null;
     }
     
-    public User(String username){
+    public User(String username) {
         this.username = username;
     }
     
@@ -37,16 +37,19 @@ public class User {
     }
     
     public boolean equals(Object object) {
-        if (this == object)
+        if (this == object) {
             return true;
+        }
         
-        if (!(object instanceof User))
+        if (!(object instanceof User)) {
             return false;
+        }
         
         User compareUser = (User) object;
         
-        if (this.username.equals(compareUser.username))
+        if (this.username.equals(compareUser.username)) {
             return true;
+        }
         
         return false;
     }
