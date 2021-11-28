@@ -19,4 +19,5 @@ public interface CourseDao {
     List<Course> findCoursesForUser(User user);
     Course findCourseById(ObjectId courseId);
     void setTimeSpentForCourse(ObjectId courseId, long timeSpent);
+    List<Course> getCourseRankFromDb();
 }

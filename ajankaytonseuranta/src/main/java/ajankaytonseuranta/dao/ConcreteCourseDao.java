@@ -11,7 +11,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
+import dev.morphia.query.Sort;
 import dev.morphia.query.experimental.filters.Filters;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.io.FileInputStream;
@@ -28,23 +30,32 @@ public class ConcreteCourseDao implements CourseDao {
     private Datastore store;
     private List<Course> courseList;
     
-    public ConcreteCourseDao(User user) throws Exception {
-        this.store = createConnection();
+    public ConcreteCourseDao(User user, boolean testmode) throws Exception {
+        this.store = createConnection(testmode);
         this.courseList = findCoursesForUser(user);
     }
     
-    private Datastore createConnection() throws Exception {
+    private Datastore createConnection(boolean testmode) throws Exception {
         Properties properties = new Properties();
         properties.load(new FileInputStream("config.properties"));
         
-        String dbAddress = properties.getProperty("dbAddress");
-        String datastoreName = properties.getProperty("datastoreName");
-        String datastoreMapper = properties.getProperty("datastoreMapper");
+        String dbAddress = "";
+        String datastoreName = "";
+        String datastoreMapper = "";
+        
+        if (testmode) {
+            dbAddress = properties.getProperty("testDbAddress");
+            datastoreName = properties.getProperty("testDatastoreName");
+            datastoreMapper = properties.getProperty("testDatastoreMapper");
+        } else {
+            dbAddress = properties.getProperty("dbAddress");
+            datastoreName = properties.getProperty("datastoreName");
+            datastoreMapper = properties.getProperty("datastoreMapper");
+        }
         
         MongoClient mc = MongoClients.create(dbAddress);
         Datastore store = Morphia.createDatastore(mc, datastoreName);
         store.getMapper().mapPackage(datastoreMapper);
-        
         
         return store;
     }
@@ -90,6 +101,18 @@ public class ConcreteCourseDao implements CourseDao {
                 .filter(Filters.eq("_id", courseId))
                 .update(UpdateOperators.set("timeSpent", timeSpent))
                 .execute();
+    }
+    
+    @Override
+    public List<Course> getCourseRankFromDb() {
+        // TODO: if multiple users have added the same course to db, add spent time together and display that
+        List<Course> topFiveCourses = store.find(Course.class)
+                .iterator(new FindOptions()
+                        .sort(Sort.descending("timeSpent"))
+                        .limit(5))
+                .toList();
+        
+        return topFiveCourses;
     }
     
 }

@@ -38,6 +38,26 @@ public class Course {
         this.userId = userId;
     }
     
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        
+        if (!(object instanceof Course)) {
+            return false;
+        }
+        
+        Course compareCourse = (Course) object;
+        
+        if (this.name.equals(compareCourse.name) &&
+                this.courseId.equals(compareCourse.courseId) &&
+                this.userId.equals(compareCourse.userId)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     public String getCourseName() {
         return this.name;
     }

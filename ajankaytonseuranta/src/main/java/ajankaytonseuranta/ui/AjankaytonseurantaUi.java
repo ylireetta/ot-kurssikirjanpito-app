@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 import ajankaytonseuranta.domain.TimeManagementService;
 import ajankaytonseuranta.domain.User;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,7 +27,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.bson.types.ObjectId;
@@ -34,7 +38,7 @@ import org.bson.types.ObjectId;
  * @author ylireett
  */
 public class AjankaytonseurantaUi extends Application {
-    // Testmode helps with junit tests when creating ConcreteUserDao
+    // Testmode helps with junit tests when creating ConcreteDaos
     private final boolean testmode = false;
     private Stage mainStage;
     private TimeManagementService tmService;
@@ -48,7 +52,7 @@ public class AjankaytonseurantaUi extends Application {
     @Override
     public void init() throws Exception {
         UserDao userDao = new ConcreteUserDao(testmode);
-        CourseDao courseDao = new ConcreteCourseDao(loggedInUser);
+        CourseDao courseDao = new ConcreteCourseDao(loggedInUser, testmode);
         
         tmService = new TimeManagementService(userDao, courseDao);
     }
@@ -141,10 +145,13 @@ public class AjankaytonseurantaUi extends Application {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(0, 10, 0, 10));
+        grid.setPadding(new Insets(10, 10, 10, 10));
         
         Label loggedInUsername = new Label("Käyttäjä: " + loggedInUser.getUsername());
         Button logOutBtn = new Button("Kirjaudu ulos");
+        logOutBtn.setMaxWidth(Double.MAX_VALUE);
+        Button courseRankBtn = new Button("Kurssien top-lista"); // Create new view for most time consuming courses
+        courseRankBtn.setMaxWidth(Double.MAX_VALUE);
         Button addCourseBtn = new Button("Lisää uusi kurssi"); // Create new view for course data input
         
         // Display courses for logged in user
@@ -167,6 +174,10 @@ public class AjankaytonseurantaUi extends Application {
             loggedInUser = tmService.getLoggedInUser();
             mainStage.getScene().setRoot(drawMainScene());
             mainStage.sizeToScene(); // Resize to correct size
+        });
+        
+        courseRankBtn.setOnAction((event) -> {
+            mainStage.getScene().setRoot(drawCourseRankScene());
         });
         
         addCourseBtn.setOnAction((event) -> {
@@ -217,16 +228,22 @@ public class AjankaytonseurantaUi extends Application {
         
         courseList.setOnAction(event);
         
-        grid.add(loggedInUsername, 3, 0);
-        grid.add(logOutBtn, 4, 0);
+        HBox btnBox = new HBox();
+        btnBox.setSpacing(10);
+        btnBox.getChildren().addAll(addCourseBtn, startTimerBtn, stopTimerBtn);
+        
+        VBox topCornerBox = new VBox();
+        topCornerBox.setSpacing(5);
+        topCornerBox.getChildren().addAll(loggedInUsername, logOutBtn, courseRankBtn);
+        
+        grid.add(topCornerBox, 3, 0);
+        grid.setRowSpan(topCornerBox, grid.REMAINING);
         grid.add(courseList, 1, 1);
         
-        grid.add(addCourseBtn, 1, 2);
-        grid.add(startTimerBtn, 2, 2);
-        grid.add(stopTimerBtn, 3, 2);
+        grid.add(btnBox, 1, 2);
         grid.add(courseInfoFromDb, 1, 4);
-        
-        
+        grid.setColumnSpan(courseInfoFromDb, grid.REMAINING);
+       
         return grid;
     }
     
@@ -285,6 +302,37 @@ public class AjankaytonseurantaUi extends Application {
         newCourseGrid.setRowSpan(instructions, newCourseGrid.REMAINING);
         
         return newCourseGrid;
+    }
+    
+    public GridPane drawCourseRankScene() {
+        GridPane courseRankGrid = new GridPane();
+        
+        Button returnBtn = new Button("Palaa takaisin");
+        returnBtn.setOnAction((event) -> {
+            mainStage.getScene().setRoot(drawLoggedInScene());
+        });
+        
+        
+        TextArea courseRank = new TextArea();
+        courseRank.setEditable(false);
+        courseRank.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        List<Course> test = tmService.getCourseRankFromDb();
+        StringBuilder sb = new StringBuilder();
+        int iteration = 1;
+        
+        for (Course c : test) {
+            sb.append(iteration + ": " + c.getCourseName() + "\n");
+            sb.append(tmService.convertTimeSpent(c) + "\n\n");
+            iteration++;
+        }
+        
+        courseRank.setText(sb.toString());
+        
+        courseRankGrid.add(returnBtn, 0, 0);
+        courseRankGrid.add(courseRank, 0, 1);
+        
+        return courseRankGrid;
     }
     
     public boolean isInteger(String text) {

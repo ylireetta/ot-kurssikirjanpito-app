@@ -13,5 +13,6 @@ to 18.11.|3|Testit, kurssiin käytetyn ajan päivittäminen kantaan
 su 21.11.|3|Etätyöpöytätestaus, mapping exceptionit ja niiden selvittely
 ma 22.11.|0.5|Loggerin aiheuttamat hämmingit pois konsolista
 to 25.11.|2|Checkstyle, dao-testit ja käytetyn ajan muuntaminen min/sek
-la 27.11.|3|Ulkoasun muokkaus, ajan päivittäminen kantaan kun ohjelma lopetetaan epätavallisesti
+la 27.11.|1.5|Ulkoasun muokkaus, ajan päivittäminen kantaan kun ohjelma lopetetaan epätavallisesti
+su 28.11.|2.5|Ulkoasun muokkaus, kurssidaon testit, vaatimusmäärittelyn päivitys, kaikkien kurssien top 5
 |yht|34|

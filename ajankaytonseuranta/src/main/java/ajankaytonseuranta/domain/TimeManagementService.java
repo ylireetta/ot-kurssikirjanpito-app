@@ -2,6 +2,7 @@ package ajankaytonseuranta.domain;
 
 import ajankaytonseuranta.dao.CourseDao;
 import ajankaytonseuranta.dao.UserDao;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.bson.types.ObjectId;
@@ -99,6 +100,10 @@ public class TimeManagementService {
                 TimeUnit.MILLISECONDS.toSeconds(timeSpentInMillis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeSpentInMillis)));
         
         return ret;
+    }
+    
+    public List<Course> getCourseRankFromDb() {
+        return courseDao.getCourseRankFromDb();
     }
     
 }
