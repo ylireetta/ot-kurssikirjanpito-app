@@ -3,6 +3,8 @@
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
+[Arkkitehtuurikuvaus](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
 [Käyttöohje](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
 
 [Tuntikirjanpito](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
