@@ -15,4 +15,5 @@ ma 22.11.|0.5|Loggerin aiheuttamat hämmingit pois konsolista
 to 25.11.|2|Checkstyle, dao-testit ja käytetyn ajan muuntaminen min/sek
 la 27.11.|1.5|Ulkoasun muokkaus, ajan päivittäminen kantaan kun ohjelma lopetetaan epätavallisesti
 su 28.11.|2.5|Ulkoasun muokkaus, kurssidaon testit, vaatimusmäärittelyn päivitys, kaikkien kurssien top 5
-|yht|34|
+ma 29.11.|4|Ulkoasun muokkaus, käyttöohje, testien täydennys, alustava arkkitehtuurikuvaus
+|yht|39|
