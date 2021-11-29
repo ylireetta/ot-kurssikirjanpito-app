@@ -12,8 +12,11 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
+import dev.morphia.query.Sort;
 import dev.morphia.query.experimental.filters.Filters;
+import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +80,30 @@ public class FakeCourseDao implements CourseDao {
     
     @Override
     public Course findCourseById(ObjectId courseId) {
-        return null;
+        Course course = store.find(Course.class)
+                .filter(Filters.eq("_id", courseId))
+                .first();
+        
+        return course;
     }
     
     @Override
     public void setTimeSpentForCourse(ObjectId courseId, long timeSpent) {
+        store.find(Course.class)
+                .filter(Filters.eq("_id", courseId))
+                .update(UpdateOperators.set("timeSpent", timeSpent))
+                .execute();
+    }
+    
+    @Override
+    public List<Course> getCourseRankFromDb() {
+        List<Course> topFiveCourses = store.find(Course.class)
+                .iterator(new FindOptions()
+                        .sort(Sort.descending("timeSpent"))
+                        .limit(5))
+                .toList();
         
+        return topFiveCourses;
     }
     
     public void deleteTestData() {

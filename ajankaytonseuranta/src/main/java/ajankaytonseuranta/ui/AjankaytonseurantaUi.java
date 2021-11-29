@@ -287,19 +287,23 @@ public class AjankaytonseurantaUi extends Application {
             }
         });
         
-        newCourseGrid.setHgap(10);
-        newCourseGrid.setVgap(10);
+        HBox btnBox = new HBox();
+        btnBox.getChildren().addAll(addCourseBtn, returnBtn);
+        btnBox.setSpacing(10);
+        btnBox.setAlignment(Pos.CENTER);
+        
+        newCourseGrid.setPadding(new Insets(10, 10, 10, 10));
         newCourseGrid.add(courseInfo, 1, 0);
         newCourseGrid.add(courseNameLabel, 0, 1);
         newCourseGrid.add(courseName, 1, 1);
         
         newCourseGrid.add(courseCreditLabel, 0, 2);
         newCourseGrid.add(courseCredit, 1, 2);
-        newCourseGrid.add(addCourseBtn, 0, 4);
-        newCourseGrid.add(returnBtn, 1, 4);
-        
-        newCourseGrid.add(instructions, 2, 0);
-        newCourseGrid.setRowSpan(instructions, newCourseGrid.REMAINING);
+        newCourseGrid.add(btnBox, 0, 3);
+        newCourseGrid.setColumnSpan(btnBox, newCourseGrid.REMAINING);
+
+        newCourseGrid.add(instructions, 0, 4);
+        newCourseGrid.setColumnSpan(instructions, newCourseGrid.REMAINING);
         
         return newCourseGrid;
     }
@@ -312,16 +316,15 @@ public class AjankaytonseurantaUi extends Application {
             mainStage.getScene().setRoot(drawLoggedInScene());
         });
         
-        
         TextArea courseRank = new TextArea();
         courseRank.setEditable(false);
         courseRank.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
-        List<Course> test = tmService.getCourseRankFromDb();
+        List<Course> topCourses = tmService.getCourseRankFromDb();
         StringBuilder sb = new StringBuilder();
         int iteration = 1;
         
-        for (Course c : test) {
+        for (Course c : topCourses) {
             sb.append(iteration + ": " + c.getCourseName() + "\n");
             sb.append(tmService.convertTimeSpent(c) + "\n\n");
             iteration++;
