@@ -1,5 +1,5 @@
 # Ohjelmistotekniikka: harjoitustyö
-
+Monien kurssien yhteydessä opiskelijan odotetaan pitävän kirjaa kurssin parissa vietetystä ajasta, ja tämän sovelluksen avulla tehtävä helpottuu (ainakin hieman). Käyttäjä voi lisätä tietokantaan omat kurssinsa ja käynnistää ajanoton aina kun alkaa työskennellä kurssin harjoitustöiden parissa. Ajanoton keskeytyessä syystä tai toisesta (napin painallus, uloskirjautuminen, sovellusikkunan sulkeminen) käytetty aika päivitetään tietokantaan.
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
@@ -10,6 +10,7 @@
 [Tuntikirjanpito](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Releaset
+TODO
 
 ## Komentorivikomennot
 Koko ohjelman ajamisen pitäisi onnistua seuraavalla komennolla:
@@ -22,12 +23,25 @@ mvn compile exec:java -Decex.mainClass=ajankaytonseuranta.ui.Main
 ```
 
 ### Testaus
+Testit ajetaan seuraavalla komennolla:
+```
+mvn test
+```
+Testiraportin luominen polun _target/site/jacoco/index.html_ päähän onnistuu seuraavalla komennolla:
+
 ```
 mvn test jacoco:report
 ```
 
 ### Suoritettavan jarin generointi
+TODO
 
 ### JavaDoc
+TODO
 
 ### Checkstyle
+Tiedostossa _checkstyle.xml_ määritellyt tarkistukset voi suorittaa seuraavalla komennolla:
+```
+mvn jxr:jxr checkstyle:checkstyle
+```
+Tuloksia voi tarkastella polun _target/site/checkstyle.html_ päästä. Tarkistuksen ulkopuolelle jäävät tiedostot (käyttöliittymän muodostava koodi) on määritelty tiedostossa _skipped_files.xml_.
