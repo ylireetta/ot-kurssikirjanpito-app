@@ -38,7 +38,7 @@ public class FakeCourseDao implements CourseDao {
     
     private Datastore createConnection() throws Exception {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("config.properties"));
+        properties.load(getClass().getResourceAsStream("/config.properties"));
         
         String testDbAddress = properties.getProperty("testDbAddress");
         String testDatastoreName = properties.getProperty("testDatastoreName");
