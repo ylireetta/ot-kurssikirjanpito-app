@@ -13,6 +13,7 @@ Perusversiossa kaikki käyttäjät ovat normaaleja käyttäjiä. Myöhemmin on m
 * TEHTY: Käyttäjä voi valita yhden kurssin, jonka parissa alkaa työskennellä
 * TEHTY: Käyttäjä voi käynnistää kellon valittuaan kurssin
 * TEHTY: Käyttäjä voi keskeyttää ajanoton
-* Käyttäjä voi tulostaa tallentamiensa kurssien tiedot (yhden tai useamman kerrallaan)
+* TEHTY: Käyttäjä voi tulostaa tallentamiensa kurssien tiedot (yhden tai useamman kerrallaan)
 * TEHTY: Käyttäjä voi kirjautua ulos
-* Käyttäjä voi tarkastella kaikkien järjestelmään tallennettujen kurssien "ranking-listaa" (ts. eniten aikaa vieneiden kurssien listaa)
+* TEHTY: Käyttäjä voi tarkastella kaikkien järjestelmään tallennettujen kurssien "ranking-listaa" (ts. eniten aikaa vieneiden kurssien listaa)
+* Käyttäjä voi poistaa lisäämänsä kurssin tietokannasta
