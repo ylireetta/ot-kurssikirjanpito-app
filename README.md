@@ -10,7 +10,7 @@ Monien kurssien yhteydessä opiskelijan odotetaan pitävän kirjaa kurssin paris
 [Tuntikirjanpito](https://github.com/ylireetta/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Releaset
-TODO
+[Viikko 5](https://github.com/ylireetta/ot-harjoitustyo/releases/tag/viikko5)
 
 ## Komentorivikomennot
 Koko ohjelman ajamisen pitäisi onnistua seuraavalla komennolla:
@@ -34,7 +34,14 @@ mvn test jacoco:report
 ```
 
 ### Suoritettavan jarin generointi
-TODO
+Suoritettava jar-tiedosto generoidaan projektin juurihakemistossa komennolla:
+```
+mvn package
+```
+Tiedosto _ajankaytonseuranta-1.0-SNAPSHOT.jar_ löytyy _target_-hakemistosta. Em. komennolla luotu jar-tiedosto ajetaan (tiedoston sisältävässä hakemistossa) komennolla:
+```
+java -jar ajankaytonseuranta-1.0-SNAPSHOT.jar
+```
 
 ### JavaDoc
 TODO
