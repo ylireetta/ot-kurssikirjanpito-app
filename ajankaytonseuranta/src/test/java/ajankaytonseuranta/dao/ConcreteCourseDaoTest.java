@@ -7,7 +7,9 @@ package ajankaytonseuranta.dao;
 
 import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.User;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,6 +60,28 @@ public class ConcreteCourseDaoTest {
         dao.setTimeSpentForCourse(newCourse.getCourseId(), 2000);
         Course courseFromDb = dao.findCourseById(newCourse.getCourseId());
         assertEquals(courseFromDb.getTimeSpent(), 2000);
+    }
+    
+    @Test
+    public void courseRankIsCorrect() throws Exception {
+        long time = 8000;
+        
+        for (int i = 1; i <= 5; i++) {
+            String courseName = "C" + i;
+            Course course = new Course(courseName, 5, testUser.getUserId());
+            dao.createCourse(course, testUser);
+            
+            dao.setTimeSpentForCourse(course.getCourseId(), time);
+            time = time + 1000;
+        }
+        
+        List<Course> toplist = dao.getCourseRankFromDb();
+        assertTrue(toplist.size() == 5);
+        assertTrue(toplist.get(0).getCourseName().equals("C5"));
+        assertTrue(toplist.get(1).getCourseName().equals("C4"));
+        assertTrue(toplist.get(2).getCourseName().equals("C3"));
+        assertTrue(toplist.get(3).getCourseName().equals("C2"));
+        assertTrue(toplist.get(4).getCourseName().equals("C1"));
     }
     
     

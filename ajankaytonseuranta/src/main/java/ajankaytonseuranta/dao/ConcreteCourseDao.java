@@ -18,8 +18,11 @@ import dev.morphia.query.experimental.filters.Filters;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 
 /**
@@ -37,7 +40,7 @@ public class ConcreteCourseDao implements CourseDao {
     
     private Datastore createConnection(boolean testmode) throws Exception {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("config.properties"));
+        properties.load(getClass().getResourceAsStream("/config.properties"));
         
         String dbAddress = "";
         String datastoreName = "";
@@ -105,12 +108,29 @@ public class ConcreteCourseDao implements CourseDao {
     
     @Override
     public List<Course> getCourseRankFromDb() {
-        // TODO: if multiple users have added the same course to db, add spent time together and display that
-        List<Course> topFiveCourses = store.find(Course.class)
+        // if multiple users have added the same course (name) to db, add spent time together and display that
+        List<Course> allCourses = store.find(Course.class)
                 .iterator(new FindOptions()
-                        .sort(Sort.descending("timeSpent"))
-                        .limit(5))
+                    .sort(Sort.descending("timeSpent")))
                 .toList();
+        
+        HashMap<String, Course> courseMap = new HashMap<>();
+        
+        for (Course c : allCourses) {
+            if (courseMap.containsKey(c.getCourseName())) {
+                // course is already in map, increase time spent
+                Course origCourse = courseMap.get(c.getCourseName());
+                origCourse.setTimeSpent(c.getTimeSpent());
+                courseMap.put(c.getCourseName(), origCourse);
+            } else {
+                courseMap.put(c.getCourseName(), c);
+            }
+        }
+        
+        // Sort descending and get top five
+        List<Course> topFiveCourses = courseMap.values()
+                .stream()
+                .sorted((o1, o2) -> Long.compare(o2.getTimeSpent(), o1.getTimeSpent())).limit(5).collect(Collectors.toList());
         
         return topFiveCourses;
     }

@@ -37,7 +37,7 @@ public class ConcreteUserDao implements UserDao {
     
     private Datastore createConnection(boolean testmode) throws Exception {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("config.properties"));
+        properties.load(getClass().getResourceAsStream("/config.properties"));
         
         String dbAddress = "";
         String datastoreName = "";

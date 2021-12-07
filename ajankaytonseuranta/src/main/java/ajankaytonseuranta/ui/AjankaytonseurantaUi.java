@@ -18,14 +18,19 @@ import ajankaytonseuranta.domain.TimeManagementService;
 import ajankaytonseuranta.domain.User;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -153,6 +158,7 @@ public class AjankaytonseurantaUi extends Application {
         Button courseRankBtn = new Button("Kurssien top-lista"); // Create new view for most time consuming courses
         courseRankBtn.setMaxWidth(Double.MAX_VALUE);
         Button addCourseBtn = new Button("Lisää uusi kurssi"); // Create new view for course data input
+        Button showDataBtn = new Button("Oma kurssidata");
         
         // Display courses for logged in user
         Callback<ListView<Course>, ListCell<Course>> factory = lv -> new ListCell<Course>() {
@@ -165,6 +171,7 @@ public class AjankaytonseurantaUi extends Application {
         
         courseList.setButtonCell(factory.call(null)); // Prevents combobox from displaying object address when selection changes
         courseList.setCellFactory(factory);
+        courseList.setValue(null); // Set value to null when entering scene
         
         logOutBtn.setOnAction((event) -> {
             if (timerRunning) {
@@ -184,6 +191,12 @@ public class AjankaytonseurantaUi extends Application {
             mainStage.getScene().setRoot(drawNewCourseScene());
         });
         
+        showDataBtn.setOnAction((event) -> {
+            // Draw new scene for pie chart
+            mainStage.getScene().setRoot(drawCourseDataScene());
+        });
+        
+        grid.add(showDataBtn, 0, 8);
         
         TextArea courseInfoFromDb = new TextArea();
         courseInfoFromDb.setEditable(false);
@@ -251,11 +264,7 @@ public class AjankaytonseurantaUi extends Application {
         GridPane newCourseGrid = new GridPane();
         
         Button addCourseBtn = new Button("Lisää kurssi");
-        Button returnBtn = new Button("Palaa takaisin");
-        
-        returnBtn.setOnAction((event) -> {
-            mainStage.getScene().setRoot(drawLoggedInScene());
-        });
+        Button returnBtn = drawReturnButton(drawLoggedInScene());
         
         Label courseNameLabel = new Label("Kurssin nimi:");
         TextField courseName = new TextField();
@@ -311,10 +320,7 @@ public class AjankaytonseurantaUi extends Application {
     public GridPane drawCourseRankScene() {
         GridPane courseRankGrid = new GridPane();
         
-        Button returnBtn = new Button("Palaa takaisin");
-        returnBtn.setOnAction((event) -> {
-            mainStage.getScene().setRoot(drawLoggedInScene());
-        });
+        Button returnBtn = drawReturnButton(drawLoggedInScene());
         
         TextArea courseRank = new TextArea();
         courseRank.setEditable(false);
@@ -336,6 +342,59 @@ public class AjankaytonseurantaUi extends Application {
         courseRankGrid.add(courseRank, 0, 1);
         
         return courseRankGrid;
+    }
+    
+    public GridPane drawCourseDataScene() {
+        // Draw a pie chart of logged in user's courses
+        GridPane dataScene = new GridPane();
+        
+        Button returnBtn = drawReturnButton(drawLoggedInScene());
+        redrawCourseList(); // Redraw in case user has started the timer at some point and now returns to this scene
+        ObservableList<Course> courseItems = courseList.getItems();
+        
+        PieChart.Data data[] = new PieChart.Data[courseItems.size()];
+        
+        for (int i = 0; i < courseItems.size(); i++) {
+            Course courseToDraw = courseItems.get(i);
+            data[i] = new PieChart.Data(courseToDraw.getCourseName(), courseToDraw.getTimeSpent());
+        }
+        
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(data);
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Ajankäytön jakauma");
+        
+        Label percentLabel = new Label("");
+        pieChartData.forEach(oneData ->
+                oneData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, e -> {
+                    double total = 0;
+                        for (PieChart.Data da : chart.getData()) {
+                            total += da.getPieValue();
+                        }
+                    String text = String.format("%1$s %%", Math.round(100 * oneData.getPieValue() / total));
+                    percentLabel.setText(oneData.getName() + " " + text);
+                })
+        );
+        
+        pieChartData.forEach(oneData ->
+                oneData.getNode().addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, e -> {
+                    percentLabel.setText("");
+                })
+        );
+        
+        dataScene.add(chart, 0, 0);
+        dataScene.add(returnBtn, 0, 1);
+        dataScene.add(percentLabel, 3, 0);
+        return dataScene;
+    }
+    
+    public Button drawReturnButton(Parent returnScene) {
+        Button returnBtn = new Button("Palaa takaisin");
+        returnBtn.setOnAction((event) -> {
+            mainStage.getScene().setRoot(returnScene);
+        });
+        
+        return returnBtn;
     }
     
     public boolean isInteger(String text) {
