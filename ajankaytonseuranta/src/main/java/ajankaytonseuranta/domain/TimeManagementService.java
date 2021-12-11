@@ -187,4 +187,13 @@ public class TimeManagementService {
         return courseDao.getCourseRankFromDb();
     }
     
+    /**
+     * Poistaa annettua id:tä vastaavan kurssin tietokannasta.
+     * 
+     * @param courseId Poistettavan kurssin id
+     */
+    public void deleteCourse(ObjectId courseId) {
+        courseDao.deleteCourseFromDb(courseId);
+    }
+    
 }

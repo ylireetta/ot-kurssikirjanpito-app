@@ -9,6 +9,8 @@ import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.User;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,6 +86,16 @@ public class ConcreteCourseDaoTest {
         assertTrue(toplist.get(4).getCourseName().equals("C1"));
     }
     
-    
+    @Test
+    public void courseCanBeDeleted() throws Exception {
+        Course deleteThis = new Course("Delete this", 5, testUser.getUserId());
+        dao.createCourse(deleteThis, testUser);
+        
+        assertNotNull(dao.findCourseById(deleteThis.getCourseId()));
+        
+        dao.deleteCourseFromDb(deleteThis.getCourseId());
+        
+        assertNull(dao.findCourseById(deleteThis.getCourseId()));
+    }
     
 }

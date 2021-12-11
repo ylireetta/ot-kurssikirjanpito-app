@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import ajankaytonseuranta.domain.TimeManagementService;
 import ajankaytonseuranta.domain.User;
 import java.util.List;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +25,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -157,6 +160,11 @@ public class AjankaytonseurantaUi extends Application {
         courseRankBtn.setMaxWidth(Double.MAX_VALUE);
         Button addCourseBtn = new Button("Lisää uusi kurssi"); // Create new view for course data input
         Button showDataBtn = new Button("Oma kurssidata");
+        Button deleteCourseBtn = new Button("Poista kurssi");
+        deleteCourseBtn.setVisible(false);
+        
+        TextArea courseInfoFromDb = new TextArea();
+        courseInfoFromDb.setEditable(false);
         
         // Display courses for logged in user
         Callback<ListView<Course>, ListCell<Course>> factory = lv -> new ListCell<Course>() {
@@ -194,10 +202,28 @@ public class AjankaytonseurantaUi extends Application {
             mainStage.getScene().setRoot(drawCourseDataScene());
         });
         
-        grid.add(showDataBtn, 0, 8);
+        deleteCourseBtn.setOnAction((event) -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Course selectedCourse = (Course) courseList.getSelectionModel().getSelectedItem();
+            
+            alert.setTitle("Poista kurssi");
+            alert.setHeaderText("Poista kurssi");
+            alert.setContentText("Haluatko varmasti poistaa kurssin " + selectedCourse.getCourseName() + "?");
+            Optional<ButtonType> pressedBtn = alert.showAndWait();
+            
+            if (!pressedBtn.isPresent() || pressedBtn.get() == ButtonType.CANCEL) {
+                System.out.println("CANCEL");
+            } else if (pressedBtn.get() == ButtonType.OK) {
+                System.out.println("OK");
+                
+                ObjectId selectedCourseId = selectedCourse.getCourseId();
+                tmService.deleteCourse(selectedCourseId);
+                courseList.setValue(null);
+                redrawCourseList();
+            }
+        });
         
-        TextArea courseInfoFromDb = new TextArea();
-        courseInfoFromDb.setEditable(false);
+        grid.add(showDataBtn, 0, 8);
         
         Button startTimerBtn = new Button("Käynnistä ajanotto");
         startTimerBtn.setVisible(false);
@@ -229,10 +255,17 @@ public class AjankaytonseurantaUi extends Application {
                 if (loggedInUser != null && courseList.getSelectionModel().getSelectedItem() != null) {
                     try {
                         startTimerBtn.setVisible(true);
+                        deleteCourseBtn.setVisible(true);
                         courseInfoFromDb.setText(refreshCourseInfo());
                     } catch (Exception ex) {
                         System.out.println("Jokin meni vikaan.");
-                    }    
+                    }
+                }
+                
+                if (courseList.getSelectionModel().getSelectedItem() == null) {
+                    startTimerBtn.setVisible(false);
+                    deleteCourseBtn.setVisible(false);
+                    courseInfoFromDb.setText(refreshCourseInfo());
                 }
             }
         };
@@ -241,7 +274,7 @@ public class AjankaytonseurantaUi extends Application {
         
         HBox btnBox = new HBox();
         btnBox.setSpacing(10);
-        btnBox.getChildren().addAll(addCourseBtn, startTimerBtn, stopTimerBtn);
+        btnBox.getChildren().addAll(addCourseBtn, startTimerBtn, stopTimerBtn, deleteCourseBtn);
         
         VBox topCornerBox = new VBox();
         topCornerBox.setSpacing(5);
@@ -422,13 +455,17 @@ public class AjankaytonseurantaUi extends Application {
     }
     
     public String refreshCourseInfo() {
-        Course selectedCourse = tmService.getCourseInfo(((Course) courseList.getSelectionModel().getSelectedItem()).getCourseId());
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Kurssin nimi: %1$s \n", selectedCourse.getCourseName()));
-        sb.append(String.format("Opintopisteet: %1$s \n", selectedCourse.getCourseCredits()));
-        sb.append(String.format("Aikaa käytetty: %1$s \n", tmService.convertTimeSpent(selectedCourse)));
-                            
-        return sb.toString();
+        if (courseList.getSelectionModel().getSelectedItem() != null) {
+            Course selectedCourse = tmService.getCourseInfo(((Course) courseList.getSelectionModel().getSelectedItem()).getCourseId());
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("Kurssin nimi: %1$s \n", selectedCourse.getCourseName()));
+            sb.append(String.format("Opintopisteet: %1$s \n", selectedCourse.getCourseCredits()));
+            sb.append(String.format("Aikaa käytetty: %1$s \n", tmService.convertTimeSpent(selectedCourse)));
+
+            return sb.toString();
+        } else {
+            return "";
+        }
     }
     
     public void updateSpentTimeToDb() {

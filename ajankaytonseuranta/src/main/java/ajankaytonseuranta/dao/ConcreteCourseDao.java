@@ -183,4 +183,16 @@ public class ConcreteCourseDao implements CourseDao {
         return topFiveCourses;
     }
     
+    /**
+     * Poistaa annettua id:tä vastaavan kurssin tietokannasta.
+     * 
+     * @param courseId Poistettavan kurssin id
+     */
+    @Override
+    public void deleteCourseFromDb(ObjectId courseId) {
+        store.find(Course.class)
+                .filter(Filters.eq("_id", courseId))
+                .delete();
+    }
+    
 }

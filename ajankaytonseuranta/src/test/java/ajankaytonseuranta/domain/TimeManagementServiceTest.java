@@ -134,6 +134,22 @@ public class TimeManagementServiceTest {
         assertEquals(topList.get(2), c2);
     }
     
+    @Test
+    public void courseCanBeDeleted() {
+        tmService.createUser("TestUser");
+        tmService.login("TestUser");
+        User loggedInUser = tmService.getLoggedInUser();
+        
+        Course cToDelete = new Course("Delete this", 5, loggedInUser.getUserId());
+        tmService.createCourse(cToDelete, loggedInUser);
+        
+        assertTrue(tmService.getCoursesForLoggedInUser().contains(cToDelete));
+        
+        tmService.deleteCourse(cToDelete.getCourseId());
+        
+        assertFalse(tmService.getCoursesForLoggedInUser().contains(cToDelete));
+    }
+    
     @After
     public void teardown() {
         userDao.deleteTestData();

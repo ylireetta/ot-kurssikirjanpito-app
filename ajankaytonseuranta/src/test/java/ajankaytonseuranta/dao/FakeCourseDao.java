@@ -17,7 +17,6 @@ import dev.morphia.query.Query;
 import dev.morphia.query.Sort;
 import dev.morphia.query.experimental.filters.Filters;
 import dev.morphia.query.experimental.updates.UpdateOperators;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -104,6 +103,13 @@ public class FakeCourseDao implements CourseDao {
                 .toList();
         
         return topFiveCourses;
+    }
+    
+    @Override
+    public void deleteCourseFromDb(ObjectId courseId) {
+        store.find(Course.class)
+                .filter(Filters.eq("_id", courseId))
+                .delete();
     }
     
     public void deleteTestData() {

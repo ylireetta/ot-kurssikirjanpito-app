@@ -20,4 +20,5 @@ ti 30.11.|0.5|Dokumentaatio, luokkakaavio
 pe 3.12.|3|Piirakkadiagrammi
 ma 6.12.|2.5|Piirakka, sekvenssikaavio, jar + properties -tiedoston ongelma
 ti 7.12.|3|Jar + properties, top 5 -kurssilista jos useampi käyttäjä lisännyt saman kurssin, sekvenssikaavio
-|yht|48|
+la 11.12.|3|JavaDoc, kurssin poistaminen
+|yht|51|
