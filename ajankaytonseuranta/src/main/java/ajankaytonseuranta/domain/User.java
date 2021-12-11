@@ -19,11 +19,18 @@ public class User {
     @Id
     private ObjectId userId;
     
-    // Dummy constructor so that morphia mapping won't fail
+    /**
+     * Dummy-konstruktori Morphia-kirjaston mappingia varten. Tätä ei ole tarkoitus käyttää olioiden luomiseen.
+     */
     public User() {
         this.username = null;
     }
     
+    /**
+     * Varsinainen User-luokan konstruktori.
+     * 
+     * @param username Käyttäjän valitsema käyttäjätunnus
+     */
     public User(String username) {
         this.username = username;
     }
@@ -36,6 +43,15 @@ public class User {
         return this.userId;
     }
     
+    /**
+     * Tarkistaa, ovatko kaksi käyttäjää samat. 
+     * Käyttäjät todetaan samoiksi, jos niiden käyttäjätunnus on sama.
+     * 
+     * @param object Vertailtava olio
+     * 
+     * @return Totuusarvo, ovatko kaksi vertailtavaa käyttäjää samat
+     */
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;

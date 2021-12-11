@@ -16,12 +16,10 @@ import dev.morphia.query.Query;
 import dev.morphia.query.Sort;
 import dev.morphia.query.experimental.filters.Filters;
 import dev.morphia.query.experimental.updates.UpdateOperators;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 
@@ -33,11 +31,26 @@ public class ConcreteCourseDao implements CourseDao {
     private Datastore store;
     private List<Course> courseList;
     
+    /**
+     * ConcreteCourseDao-luokan konstruktori.
+     * 
+     * @param user 
+     * @param testmode  Totuusarvo, jonka avulla voidaan eriyttää testi- ja tuotantotietokannat toisistaan
+     * @throws Exception 
+     */
     public ConcreteCourseDao(User user, boolean testmode) throws Exception {
         this.store = createConnection(testmode);
         this.courseList = findCoursesForUser(user);
     }
     
+    /**
+     * Muodostaa yhteyden config.properties-tiedostossa määriteltyyn tietokantaan.
+     * 
+     * @param testmode Totuusarvo, jonka avulla erotetaan testauksessa ja tuotannossa käytettävät dokumenttikokoelmat toisistaan
+     * 
+     * @return Ohjelman ajon aikana käytettävä tietokantayhteys
+     * @throws Exception 
+     */
     private Datastore createConnection(boolean testmode) throws Exception {
         Properties properties = new Properties();
         properties.load(getClass().getResourceAsStream("/config.properties"));
@@ -63,6 +76,13 @@ public class ConcreteCourseDao implements CourseDao {
         return store;
     }
     
+    /**
+     * Hakee annetun käyttäjän lisäämät Course-luokan oliot tietokannasta.
+     * 
+     * @param user Käyttäjä, jonka kurssit halutaan noutaa
+     * 
+     * @return Käyttäjän kantaan lisäämät kurssit
+     */
     @Override
     public List<Course> findCoursesForUser(User user) {
         List<Course> courses = new ArrayList<>();
@@ -81,6 +101,14 @@ public class ConcreteCourseDao implements CourseDao {
         return courses;
     }
     
+    /**
+     * Tallettaa annettuun käyttäjään viittaavan uuden Course-luokan olion tietokantaan.
+     * 
+     * @param course Luotava kurssi
+     * @param user Kurssin luonut käyttäjä
+     * 
+     * @return Luotu kurssi
+     */
     @Override
     public Course createCourse(Course course, User user) {
         store.save(course);
@@ -89,6 +117,13 @@ public class ConcreteCourseDao implements CourseDao {
         return course;
     }
     
+    /**
+     * Hakee annettua MongoDB-id:tä vastaavan Course-luokan olion tietokannasta.
+     * 
+     * @param courseId Haettavan kurssin MongoDB-id
+     * 
+     * @return Annettua MongoDB-id:ä vastaava Course-olio
+     */
     @Override
     public Course findCourseById(ObjectId courseId) {
         Course course = store.find(Course.class)
@@ -98,6 +133,12 @@ public class ConcreteCourseDao implements CourseDao {
         return course;
     }
     
+    /**
+     * Päivittää kurssiin käytetyn ajan tietokantaan.
+     * 
+     * @param courseId Päivitettävän Course-olion MongoDB-id
+     * @param timeSpent Kurssiin yhteensä käytetty aika
+     */
     @Override
     public void setTimeSpentForCourse(ObjectId courseId, long timeSpent) {
         store.find(Course.class)
@@ -106,6 +147,13 @@ public class ConcreteCourseDao implements CourseDao {
                 .execute();
     }
     
+    /**
+     * Hakee top 5 eniten aikaa vienyttä kurssia tietokannasta.
+     * Haku tehdään koko tietokannasta, ts. lisääjä ei vaikuta ranking-listaan.
+     * Jos useampi käyttäjä on lisännyt samannimisen kurssin kantaan, lasketaan näiden yksittäisten kurssien viemät ajat yhteen ja käsitellään ne yhtenä kurssina.
+     * 
+     * @return Viisi eniten aikaa vienyttä Course-luokan oliota tietokannasta
+     */
     @Override
     public List<Course> getCourseRankFromDb() {
         // if multiple users have added the same course (name) to db, add spent time together and display that

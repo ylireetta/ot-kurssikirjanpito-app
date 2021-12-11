@@ -16,9 +16,7 @@ import javafx.stage.Stage;
 
 import ajankaytonseuranta.domain.TimeManagementService;
 import ajankaytonseuranta.domain.User;
-import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -363,7 +361,7 @@ public class AjankaytonseurantaUi extends Application {
                 FXCollections.observableArrayList(data);
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Ajankäytön jakauma");
-        
+                
         Label percentLabel = new Label("");
         pieChartData.forEach(oneData ->
                 oneData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, e -> {

@@ -5,10 +5,8 @@
  */
 package ajankaytonseuranta.domain;
 
-import dev.morphia.annotations.Embedded;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Reference;
 import org.bson.types.ObjectId;
 
 /**
@@ -24,6 +22,9 @@ public class Course {
     private long timeSpent;
     private ObjectId userId;
     
+    /**
+     * Dummy-konstruktori Morphia-kirjaston mappingia varten. Tätä ei ole tarkoitus käyttää olioiden luomiseen.
+     */
     public Course() {
         this.name = null;
         this.credits = 0;
@@ -31,6 +32,15 @@ public class Course {
         this.userId = null;
     }
     
+    /**
+     * Varsinainen Course-luokan konstruktori.
+     * 
+     * @param name Kurssin nimi
+     * @param credits Opintopisteiden määrä
+     * @param userId Kurssin luoneen käyttäjän MongoDB-id
+     * 
+     * @see ajankaytonseuranta.domain.User
+     */
     public Course(String name, int credits, ObjectId userId) {
         this.name = name;
         this.credits = credits;
@@ -38,6 +48,15 @@ public class Course {
         this.userId = userId;
     }
     
+    /**
+     * Tarkistaa, ovatko kaksi kurssia samat. 
+     * Kurssit todetaan samoiksi, jos niiden nimi, MongoDB-id ja kurssin lisännen käyttäjän MongoDB-id ovat samat.
+     * 
+     * @param object Vertailtava olio
+     * 
+     * @return Totuusarvo, ovatko kaksi vertailtavaa kurssia samat
+     */
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
@@ -74,6 +93,11 @@ public class Course {
         return this.courseId;
     }
     
+    /**
+     * Kasvattaa kurssiin käytettyä aikaa.
+     * 
+     * @param time Työskentelyyn käytetty aika millisekunteina
+     */
     public void setTimeSpent(long time) {
         this.timeSpent += time;
     }
