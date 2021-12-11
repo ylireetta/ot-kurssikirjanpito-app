@@ -13,7 +13,7 @@ Pakkaus _ajankaytonseuranta.ui_ sisältää JavaFX-käyttöliittymään liittyv�
 ## Sovelluslogiikka
 Sovelluksen perimmäistä tarkoitusta palvelevat User- ja Course-luokkien oliot. User-oliot kuvaavat käyttäjiä ja Course-oliot kursseja, joita käyttäjät luovat.
 
-Sovelluslogiikasta huolehtii TimeManagementService-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. TimeManagementService hallinnoi käyttäjiä ja kursseja erillisten tietokantaoperaatioista vastaavien luokkien kautta, ja nämä luokat puolestaan toteuttavat rajapinnat UserDao ja CourseDao. Toteutukset injektoidaan TimeManagementService-luokan konstruktorikutsussa, kun sovellus käynnistetään.
+Sovelluslogiikasta huolehtii TimeManagementService-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. TimeManagementService hallinnoi käyttäjiä ja kursseja erillisten, UserDao- ja CourseDao-rajapinnat toteuttavien luokkion kautta. Nämä tietokantaoperaatioista vastaavat toteutukset injektoidaan TimeManagementService-luokan konstruktorikutsussa, kun sovellus käynnistetään.
 
 ### Päätoiminnallisuudet
 #### Sisäänkirjautuminen
