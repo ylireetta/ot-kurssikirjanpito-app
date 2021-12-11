@@ -2,7 +2,6 @@
 
 ![Arkkitehtuuri](/dokumentaatio/kuvat/classdiagram.jpg)
 
-![Sisäänkirjautumisen sekvenssikaavio](/dokumentaatio/kuvat/loginSequenceDiagram.png)
 
 ## Rakenne
 Ohjelman rakenne on jaettu kolmeen tasoon, joilla on omat pakettinsa - _ajankaytonseuranta.ui_, _ajankaytonseuranta.domain_ ja _ajankaytonseuranta.dao_.
