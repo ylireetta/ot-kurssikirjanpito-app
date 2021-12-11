@@ -16,4 +16,5 @@ Perusversiossa kaikki käyttäjät ovat normaaleja käyttäjiä. Myöhemmin on m
 * TEHTY: Käyttäjä voi tulostaa tallentamiensa kurssien tiedot (yhden tai useamman kerrallaan)
 * TEHTY: Käyttäjä voi kirjautua ulos
 * TEHTY: Käyttäjä voi tarkastella kaikkien järjestelmään tallennettujen kurssien "ranking-listaa" (ts. eniten aikaa vieneiden kurssien listaa)
-* Käyttäjä voi poistaa lisäämänsä kurssin tietokannasta
+* TEHTY: Käyttäjä voi poistaa yksittäisen lisäämänsä kurssin tietokannasta
+* Käyttäjä voi poistaa kaikki lisäämänsä kurssit tietokannasta

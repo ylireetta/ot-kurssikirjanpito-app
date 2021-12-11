@@ -44,7 +44,10 @@ java -jar ajankaytonseuranta-1.0-SNAPSHOT.jar
 ```
 
 ### JavaDoc
-TODO
+JavaDocin generointi polun _target/site/apidocs/index.html_ päähän onnistuu komennolla:
+```
+mvn javadoc:javadoc
+```
 
 ### Checkstyle
 Tiedostossa _checkstyle.xml_ määritellyt tarkistukset voi suorittaa seuraavalla komennolla:
