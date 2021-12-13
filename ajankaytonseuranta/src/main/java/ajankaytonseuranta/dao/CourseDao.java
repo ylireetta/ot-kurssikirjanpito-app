@@ -21,4 +21,5 @@ public interface CourseDao {
     void setTimeSpentForCourse(ObjectId courseId, long timeSpent);
     List<Course> getCourseRankFromDb();
     void deleteCourseFromDb(ObjectId courseId);
+    void deleteAllCoursesForUser(User user);
 }

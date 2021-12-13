@@ -158,16 +158,21 @@ public class TimeManagementService {
     }
     
     /**
-     * Muuntaa annettuun kurssin käytetyn ajan millisekunneista minuuteiksi ja sekunneiksi.
-     * Metodi on tarkoitettu käyttöliittymän kurssinäkymässä käytettäväksi.
+     * Muuntaa kurssiin käytetyn ajan tai piirakkakaaviosta saadun aikamäärän millisekunneista minuuteiksi ja sekunneiksi.
      * 
      * @param course Käsiteltävä Course-luokan olio
+     * @param value Piirakkakaaviosta haettu aika
      * 
      * @return Kurssiin käytetty aika minuuteiksi ja sekunneiksi muunnettuna ja merkkijonoksi muotoiltuna
      */
-    public String convertTimeSpent(Course course) {
+    public String convertTimeSpent(Course course, double value) {
         // For display purposes
-        long timeSpentInMillis = course.getTimeSpent();
+        long timeSpentInMillis = 0;
+        if (course != null) {
+            timeSpentInMillis = course.getTimeSpent();
+        } else if (course == null && value > -1) {
+            timeSpentInMillis = (long) value;
+        }
         
         String ret = String.format("%02d minuuttia, %02d sekuntia", 
                 TimeUnit.MILLISECONDS.toMinutes(timeSpentInMillis), 
@@ -194,6 +199,15 @@ public class TimeManagementService {
      */
     public void deleteCourse(ObjectId courseId) {
         courseDao.deleteCourseFromDb(courseId);
+    }
+    
+    /**
+     * Poistaa kaikki annetun käyttäjän kurssit tietokannasta.
+     * 
+     * @param user Käyttäjä, jonka kurssit poistetaan
+     */
+    public void deleteAllCourses(User user) {
+        courseDao.deleteAllCoursesForUser(user);
     }
     
 }

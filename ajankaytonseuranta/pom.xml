@@ -65,6 +65,7 @@
                 <configuration>
                     <excludes>
                         <exclude>ajankaytonseuranta/ui/*</exclude>
+                        <exclude>ajankaytonseuranta/helpers/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

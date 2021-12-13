@@ -150,6 +150,50 @@ public class TimeManagementServiceTest {
         assertFalse(tmService.getCoursesForLoggedInUser().contains(cToDelete));
     }
     
+    @Test
+    public void multipleCoursesCanBeDeleted() {
+        tmService.createUser("TestUser");
+        tmService.login("TestUser");
+        User loggedInUser = tmService.getLoggedInUser();
+        
+        Course c1 = new Course("TestCourse1", 5, loggedInUser.getUserId());
+        Course c2 = new Course("TestCourse2", 5, loggedInUser.getUserId());
+        Course c3 = new Course("TestCourse3", 5, loggedInUser.getUserId());
+        Course c4 = new Course("TestCourse4", 5, loggedInUser.getUserId());
+        Course c5 = new Course("TestCourse5", 5, loggedInUser.getUserId());
+        
+        tmService.createCourse(c1, loggedInUser);
+        tmService.createCourse(c2, loggedInUser);
+        tmService.createCourse(c3, loggedInUser);
+        tmService.createCourse(c4, loggedInUser);
+        tmService.createCourse(c5, loggedInUser);
+        
+        assertTrue(tmService.getCoursesForLoggedInUser().size() == 5);
+        
+        tmService.deleteAllCourses(loggedInUser);
+        assertTrue(tmService.getCoursesForLoggedInUser().isEmpty());   
+    }
+    
+    @Test
+    public void timeSpentStringBasedOnCourseObject() {
+        tmService.createUser("TestUser");
+        tmService.login("TestUser");
+        User loggedInUser = tmService.getLoggedInUser();
+        
+        Course c1 = new Course("TestCourse1", 5, loggedInUser.getUserId());
+        tmService.createCourse(c1, loggedInUser);
+        tmService.setTimeSpentForCourse(c1.getCourseId(), 0, 2000);
+        
+        Course updated = tmService.getCourseInfo(c1.getCourseId());
+        
+        assertEquals("00 minuuttia, 02 sekuntia", tmService.convertTimeSpent(updated, -1));
+    }
+    
+    @Test
+    public void timeSpentStringBasedOnDoubleValue() {
+        assertEquals("00 minuuttia, 02 sekuntia", tmService.convertTimeSpent(null, 2000.0));
+    }
+    
     @After
     public void teardown() {
         userDao.deleteTestData();

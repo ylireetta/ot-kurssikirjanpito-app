@@ -1,0 +1,99 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ajankaytonseuranta.ui;
+
+import ajankaytonseuranta.domain.TimeManagementService;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+
+/**
+ *
+ * @author ylireett
+ */
+public class LogInScene {
+    AjankaytonseurantaUi main;
+    TimeManagementService time;
+    
+    public LogInScene(AjankaytonseurantaUi ui, TimeManagementService tms) {
+        this.main = ui;
+        this.time = tms;
+    }
+    
+    public BorderPane drawMainScene() {
+        BorderPane mainLayout = new BorderPane();
+        mainLayout.setPadding(new Insets(10, 10, 10, 10));
+        
+        // Buttons
+        TilePane buttonPane = new TilePane();
+        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setHgap(10);
+        
+        Label info = new Label();
+        
+        TextField username = new TextField();
+        username.setPromptText("Käyttäjätunnus");
+        username.setFocusTraversable(false);
+        username.setMaxWidth(200);
+        
+        Button loginBtn = new Button("Kirjaudu sisään");
+        loginBtn.setMaxWidth(Double.MAX_VALUE);
+        Button createNewUserBtn = new Button("Luo uusi käyttäjä");
+        createNewUserBtn.setMaxWidth(Double.MAX_VALUE);
+        Button finishBtn = new Button("Sulje");
+        finishBtn.setMaxWidth(Double.MAX_VALUE);
+        
+        loginBtn.setOnAction((event) -> {
+            String name = username.getText();
+            
+            if (time.login(name)) {
+                main.setLoggedInUser(time.getLoggedInUser());
+                main.darCourseListScene(); // Set courselistscene in main private properties
+                main.getCourseScene().redrawCourseList();
+                main.setScene(main.darCourseListScene());
+                main.getMainStage().sizeToScene(); // Resize to fit all components
+            } else {
+                info.setText("Käyttäjätunnusta ei löydy kannasta. Luo uusi käyttäjä.");
+                info.setTextFill(Color.RED);
+            }
+        });
+        
+        createNewUserBtn.setOnAction((event) -> {
+            String name = username.getText();
+            
+            if (name.length() < 3) {
+                info.setText("Käyttäjätunnuksen on oltava vähintään kolme merkkiä pitkä.");
+                info.setTextFill(Color.RED);
+            } else if (time.createUser(name)) {
+                info.setText("Uusi käyttäjä luotu.");
+                info.setTextFill(Color.GREEN);
+            } else {
+                info.setText("Käyttäjätunnus on jo varattu.");
+                info.setTextFill(Color.RED);
+            }
+            
+        });
+        
+        finishBtn.setOnAction((event) -> {
+            main.getMainStage().close();
+        });
+        
+        buttonPane.getChildren().addAll(loginBtn, createNewUserBtn, finishBtn);
+        
+        mainLayout.setTop(info);
+        mainLayout.setAlignment(info, Pos.TOP_CENTER);
+        mainLayout.setCenter(username);
+        mainLayout.setBottom(buttonPane);
+        
+        return mainLayout;
+    }
+    
+}

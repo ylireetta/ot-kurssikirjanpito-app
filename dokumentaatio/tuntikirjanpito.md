@@ -21,4 +21,6 @@ pe 3.12.|3|Piirakkadiagrammi
 ma 6.12.|2.5|Piirakka, sekvenssikaavio, jar + properties -tiedoston ongelma
 ti 7.12.|3|Jar + properties, top 5 -kurssilista jos useampi käyttäjä lisännyt saman kurssin, sekvenssikaavio
 la 11.12.|3.5|JavaDoc, kurssin poistaminen, dokumentaatio
-|yht|51.5|
+su 12.12.|3.5|Käyttöliittymän jakaminen useampaan luokkaan
+ma 13.12.|4|Käyttöliittymän jakaminen useampaan luokkaan, testit, kurssien poistaminen
+|yht|55.5|

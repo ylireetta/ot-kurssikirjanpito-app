@@ -11,6 +11,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
+import dev.morphia.DeleteOptions;
 import dev.morphia.Morphia;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
@@ -110,6 +111,14 @@ public class FakeCourseDao implements CourseDao {
         store.find(Course.class)
                 .filter(Filters.eq("_id", courseId))
                 .delete();
+    }
+    
+    @Override
+    public void deleteAllCoursesForUser(User user) {
+        store.find(Course.class)
+                .filter(Filters.eq("userId", user.getUserId()))
+                .delete(new DeleteOptions()
+                .multi(true));
     }
     
     public void deleteTestData() {
