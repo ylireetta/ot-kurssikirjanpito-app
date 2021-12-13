@@ -23,4 +23,4 @@ ti 7.12.|3|Jar + properties, top 5 -kurssilista jos useampi käyttäjä lisänny
 la 11.12.|3.5|JavaDoc, kurssin poistaminen, dokumentaatio
 su 12.12.|3.5|Käyttöliittymän jakaminen useampaan luokkaan
 ma 13.12.|4|Käyttöliittymän jakaminen useampaan luokkaan, testit, kurssien poistaminen
-|yht|55.5|
+|yht|59|
