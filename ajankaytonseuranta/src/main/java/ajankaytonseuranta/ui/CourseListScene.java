@@ -20,10 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author ylireett
- */
 public class CourseListScene {
     private AjankaytonseurantaUi main;
     private TimeManagementService time;

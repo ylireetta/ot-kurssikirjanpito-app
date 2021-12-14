@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- *
- * @author ylireett
- */
 public class FakeUserDao implements UserDao {
     private List<User> userlist;
     private Datastore store;

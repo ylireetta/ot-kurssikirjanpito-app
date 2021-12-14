@@ -15,10 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-/**
- *
- * @author ylireett
- */
 public class CourseDataScene {
     private AjankaytonseurantaUi main;
     private TimeManagementService time;

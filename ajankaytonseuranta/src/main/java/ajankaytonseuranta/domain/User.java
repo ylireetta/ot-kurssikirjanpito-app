@@ -9,10 +9,6 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author ylireett
- */
 @Entity("users")
 public class User {
     private String username;

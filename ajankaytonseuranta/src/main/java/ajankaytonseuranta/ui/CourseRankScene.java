@@ -12,10 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
-/**
- *
- * @author ylireett
- */
 public class CourseRankScene {
     private AjankaytonseurantaUi main;
     private TimeManagementService time;

@@ -7,4 +7,10 @@
 <suppressions>
     <suppress files="ajankaytonseuranta.ui.Main.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="ajankaytonseuranta.ui.AjankaytonseurantaUi.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="ajankaytonseuranta.ui.LogInScene.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="ajankaytonseuranta.ui.CourseListScene.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="ajankaytonseuranta.ui.CourseDataScene.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="ajankaytonseuranta.ui.DeleteCoursesScene.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="ajankaytonseuranta.ui.NewCourseScene.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="ajankaytonseuranta.ui.CourseRankScene.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

@@ -9,10 +9,6 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author ylireett
- */
 @Entity("courses")
 public class Course {
     @Id

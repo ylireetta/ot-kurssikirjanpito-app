@@ -5,10 +5,6 @@
  */
 package ajankaytonseuranta.ui;
 
-/**
- *
- * @author ylireett
- */
 public class Main {
     
     public static void main(String[] args) {

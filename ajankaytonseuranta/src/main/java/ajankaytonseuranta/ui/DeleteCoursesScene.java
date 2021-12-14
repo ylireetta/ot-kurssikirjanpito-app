@@ -20,10 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
-/**
- *
- * @author ylireett
- */
 public class DeleteCoursesScene {
     private AjankaytonseurantaUi main;
     private TimeManagementService time;

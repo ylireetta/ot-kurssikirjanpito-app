@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author ylireett
- */
-
 public class TimeManagementService {
     private UserDao userDao;
     private CourseDao courseDao;
@@ -88,10 +83,6 @@ public class TimeManagementService {
         loggedInUser = null;
     }
     
-    /**
-     * 
-     * @return Sisäänkirjautunutta käyttäjää vastaava User-olio
-     */
     public User getLoggedInUser() {
         return this.loggedInUser;
     }

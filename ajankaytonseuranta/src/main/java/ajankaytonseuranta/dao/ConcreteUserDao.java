@@ -15,19 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- *
- * @author ylireett
- */
 public class ConcreteUserDao implements UserDao {
     private Datastore store;
     private List<User> userlist;
-    
-    // Dummy constructor
-    public ConcreteUserDao() {
-        store = null;
-        userlist = null;
-    }
     
     /**
      * ConcreteUserDao-luokan konstruktori.

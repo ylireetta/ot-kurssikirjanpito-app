@@ -16,10 +16,7 @@ import ajankaytonseuranta.domain.User;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import org.bson.types.ObjectId;
-/**
- *
- * @author ylireett
- */
+
 public class AjankaytonseurantaUi extends Application {
     // Testmode helps with junit tests when creating ConcreteDaos
     private final boolean testmode = false;

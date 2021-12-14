@@ -31,12 +31,6 @@ public class ConcreteUserDaoTest {
     }
     
     @Test
-    public void dummyConstructorWorks() {
-        ConcreteUserDao dummyDao = new ConcreteUserDao();
-        assertNull(dummyDao.getAll());
-    }
-    
-    @Test
     public void userCanBeCreated() throws Exception {
         User user = new User("Test User");
         User createdUser = dao.createUser(user);

@@ -16,10 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-/**
- *
- * @author ylireett
- */
 public class NewCourseScene {
     private AjankaytonseurantaUi main;
     private TimeManagementService time;

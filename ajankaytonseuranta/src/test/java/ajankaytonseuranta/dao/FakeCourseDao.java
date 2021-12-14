@@ -23,10 +23,6 @@ import java.util.List;
 import java.util.Properties;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author ylireett
- */
 public class FakeCourseDao implements CourseDao {
     private Datastore store;
     private List<Course> courseList;

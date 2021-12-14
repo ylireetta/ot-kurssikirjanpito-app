@@ -15,10 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 
-/**
- *
- * @author ylireett
- */
 public class LogInScene {
     AjankaytonseurantaUi main;
     TimeManagementService time;

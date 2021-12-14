@@ -24,10 +24,6 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author ylireett
- */
 public class ConcreteCourseDao implements CourseDao {
     private Datastore store;
     private List<Course> courseList;
