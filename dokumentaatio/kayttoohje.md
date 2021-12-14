@@ -30,12 +30,16 @@ Käyttäjä voi tarkastella yksittäisen kurssin tietoja valitsemalla haluamansa
 Kurssinäkymän napista _Kurssien top-lista_ pääsee uuteen näkymään, johon on listattu tietokannasta viisi aikaavievintä kurssia. Nämä kurssit eivät välttämättä ole sisäänkirjautuneen käyttäjän itse lisäämiä, vaan top-lista muodostuu koko kurssitietokannan pohjalta.
 
 ![Top 5 -kurssien näkymä](/dokumentaatio/kuvat/topcourses.png)
-## Kurssien poistaminen
+### Kurssien poistaminen
 Käyttäjä voi poistaa joko yksittäisen kurssin tai kaikki kurssit kerralla. Käyttäjälle esitetään varmistusikkuna, ennen kuin poisto-operaatio viimeistellään.
+
 ![Kurssien poistaminen](/dokumentaatio/kuvat/deletecoursescene.png)
+
 ![Yhden kurssin poistaminen](/dokumentaatio/kuvat/deleteone.png)
+
 ![Kaikkien kurssien poistaminen](/dokumentaatio/kuvat/deleteall.png)
 
-## Kurssien yhteenveto
+### Kurssien yhteenveto
 Yhteenvetonäkymässä käyttäjä voi tarkastella lisäämiensä kurssien viemää aikaa kokonaisuutena piirakkadiagrammista.
+
 ![Kurssien yhteenvetonäkymä](/dokumentaatio/kuvat/coursedatascene.png)
