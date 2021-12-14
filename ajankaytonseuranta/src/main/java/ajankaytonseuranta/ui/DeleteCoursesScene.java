@@ -9,7 +9,6 @@ import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.TimeManagementService;
 import ajankaytonseuranta.helpers.CourseListHelper;
 import java.util.Optional;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -17,13 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import javafx.util.Callback;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -36,6 +31,13 @@ public class DeleteCoursesScene {
     private ComboBox courseList = new ComboBox();
     private CourseListHelper helper;
     
+    /**
+     * DeleteCoursesScene-luokan konstruktori.
+     * 
+     * @param ui Ohjelman ui-luokkien pääluokka
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-olio
+     * @param parent Edellinen näkymä
+     */
     public DeleteCoursesScene(AjankaytonseurantaUi ui, TimeManagementService tms, CourseListScene parent) {
         this.main = ui;
         this.time = tms;
@@ -44,6 +46,11 @@ public class DeleteCoursesScene {
         
     }
     
+    /**
+     * Piirtää kurssien poistonäkymän.
+     * 
+     * @return Kurssien poistonäkymä
+     */
     public GridPane drawDeleteCoursesScene() {
         GridPane deleteScene = new GridPane();
         Label info = new Label("Kurssien poistaminen");
@@ -98,6 +105,11 @@ public class DeleteCoursesScene {
         return deleteScene;
     }
     
+    /**
+     * Näyttää käyttäjälle varmistusikkunan kurssien poistosta.
+     * 
+     * @param deleteAll Totuusarvo, halutaanko poistaa kaikki kurssit
+     */
     public void raiseAlert(boolean deleteAll) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         Course selectedCourse = null;
@@ -133,6 +145,9 @@ public class DeleteCoursesScene {
         }
     }
     
+    /**
+     * Päivittää kurssien alasvetovalikon.
+     */
     public void redrawCourseList() {
         helper.redrawCourseList(courseList);
     }

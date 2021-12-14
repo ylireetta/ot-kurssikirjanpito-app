@@ -196,6 +196,11 @@ public class ConcreteCourseDao implements CourseDao {
                 .delete();
     }
     
+    /**
+     * Poistaa annetun käyttäjän kaikki kurssit tietokannasta.
+     * 
+     * @param user Käyttäjä, jonka kurssit poistetaan
+     */
     @Override
     public void deleteAllCoursesForUser(User user) {
         store.find(Course.class)

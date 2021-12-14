@@ -1,7 +1,7 @@
 title Sisäänkirjautuminen
 actor User
-User->UI: click loginBtn
-UI->+TimeManagementService: login("Reetta")
+User->+LogInScene: click loginBtn
+LogInScene->+TimeManagementService: login("Reetta")
 TimeManagementService->TimeManagementService: userExists("Reetta")
 activate TimeManagementService
 TimeManagementService->+UserDao: findByUsername("Reetta")
@@ -9,4 +9,4 @@ TimeManagementService->+UserDao: findByUsername("Reetta")
 UserDao-->-TimeManagementService: User
 deactivate TimeManagementService
 TimeManagementService->UserDao: loggedInuser:= findByUsername("Reetta")
-TimeManagementService->UI: mainStage.getScene().setRoot(drawLoggedInScene())
+LogInScene->LogInScene: mainStage.setScene(courseListScene)

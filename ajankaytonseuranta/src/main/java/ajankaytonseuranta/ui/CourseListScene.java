@@ -8,23 +8,16 @@ package ajankaytonseuranta.ui;
 import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.TimeManagementService;
 import ajankaytonseuranta.helpers.CourseListHelper;
-import java.util.Optional;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import org.bson.types.ObjectId;
 
 /**
@@ -40,6 +33,12 @@ public class CourseListScene {
     private ComboBox courseList = new ComboBox();
     private CourseListHelper helper;
     
+    /**
+     * CourseListScene-luokan konstruktori.
+     * 
+     * @param ui Ohjelman ui-luokkien pääluokka
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-olio
+     */
     public CourseListScene(AjankaytonseurantaUi ui, TimeManagementService tms) {
         this.main = ui;
         this.time = tms;
@@ -58,6 +57,11 @@ public class CourseListScene {
         return timerRunning;
     }
     
+    /**
+     * Piirtää kirjautuneen käyttäjän kurssinäkymän.
+     * 
+     * @return Kirjautuneen käyttäjän kurssinäkymä
+     */
     public GridPane drawCourseListScene() {
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -178,10 +182,18 @@ public class CourseListScene {
         return grid;
     }
     
+    /**
+     * Päivittää kurssinäkymän alasvetovalikon.
+     */
     public void redrawCourseList() {
         helper.redrawCourseList(courseList);
     }
     
+    /**
+     * Muodostaa tekstimuotoisen esityksen valitun kurssin tiedoista.
+     * 
+     * @return Valitun kurssin tiedot tekstimuodossa
+     */
     public String refreshCourseInfo() {
         if (courseList.getSelectionModel().getSelectedItem() != null) {
             Course selectedCourse = time.getCourseInfo(((Course) courseList.getSelectionModel().getSelectedItem()).getCourseId());

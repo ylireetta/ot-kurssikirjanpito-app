@@ -9,7 +9,6 @@ import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.TimeManagementService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,17 +25,29 @@ public class NewCourseScene {
     private TimeManagementService time;
     private CourseListScene p;
     
+    /**
+     * NewCourseScene-luokan konstruktori.
+     * 
+     * @param ui Ohjelman ui-luokkien pääluokka
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-olio
+     * @param parent Edellinen näkymä
+     */
     public NewCourseScene(AjankaytonseurantaUi ui, TimeManagementService tms, CourseListScene parent) {
         this.main = ui;
         this.time = tms;
         this.p = parent;
     }
     
+    /**
+     * Piirtää kurssin luontinäkymän.
+     * 
+     * @return Uuden kurssin luontinäkymä
+     */
     public GridPane drawNewCourseScene() {
         GridPane newCourseGrid = new GridPane();
         
         Button addCourseBtn = new Button("Lisää kurssi");
-        Button returnBtn = main.drawReturnButton(main.darCourseListScene());
+        Button returnBtn = main.drawReturnButton(main.drawCourseListScene());
         
         Label courseNameLabel = new Label("Kurssin nimi:");
         TextField courseName = new TextField();
@@ -89,6 +100,13 @@ public class NewCourseScene {
         return newCourseGrid;
     }
     
+    /**
+     * Tarkistaa, voiko annetun merkkijonon muuuntaa positiiviseksi kokonaisluvuksi.
+     * 
+     * @param text Tarkistettava merkkijono
+     * 
+     * @return Totuusarvo, voiko merkkijonon muuntaa positiiviseksi kokonaisluvuksi
+     */
     private boolean isInteger(String text) {
         if (text == null) {
             return false;

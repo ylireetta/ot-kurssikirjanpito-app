@@ -21,12 +21,24 @@ public class CourseRankScene {
     private TimeManagementService time;
     private CourseListScene parent;
     
+    /**
+     * CourseRankScene-luokan konstruktori.
+     * 
+     * @param ui Ohjelman ui-luokkien pääluokka
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-olio
+     * @param parent Edellinen näkymä
+     */
     public CourseRankScene(AjankaytonseurantaUi ui, TimeManagementService tms, CourseListScene parent) {
         this.main = ui;
         this.time = tms;
         this.parent = parent;
     }
     
+    /**
+     * Piirtää aikaavievimpien kurssien top-listanäkymän.
+     * 
+     * @return Aikaavievimpien kurssien top-listanäkymä
+     */
     public GridPane drawCourseRankScene() {
         GridPane courseRankGrid = new GridPane();
         

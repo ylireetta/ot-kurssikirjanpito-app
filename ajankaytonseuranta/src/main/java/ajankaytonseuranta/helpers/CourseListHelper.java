@@ -20,10 +20,20 @@ import javafx.util.Callback;
 public class CourseListHelper {
     private TimeManagementService time;
     
+    /**
+     * CourseListHelper-luokan konstruktori.
+     * 
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-luokan olio
+     */
     public CourseListHelper(TimeManagementService tms) {
         this.time = tms;
     }
     
+    /**
+     * Muodostaa kurssien alasvetovalikon uudelleen.
+     * 
+     * @param courseList Alasvetovalikko, jonka sisältö halutaan päivittää
+     */
     public void redrawCourseList(ComboBox courseList) {
         courseList.getItems().clear();
         
@@ -32,6 +42,11 @@ public class CourseListHelper {
         }
     }
     
+    /**
+     * Muodostaa alasvetovalikon sisällön uutta näkymää luotaessa.
+     * 
+     * @param courseList Alasvetovalikko, jonka sisältö halutaan muodostaa
+     */
     public void populateCourseList(ComboBox courseList) {
         Callback<ListView<Course>, ListCell<Course>> factory = lv -> new ListCell<Course>() {
             @Override

@@ -105,10 +105,6 @@ public class ConcreteUserDao implements UserDao {
         return user;
     }
     
-    /**
-     * 
-     * @return Tietokantaan talletetut käyttäjät
-     */
     @Override
     public List<User> getAll() {
         return userlist;

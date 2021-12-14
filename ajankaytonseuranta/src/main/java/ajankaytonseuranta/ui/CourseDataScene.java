@@ -24,12 +24,24 @@ public class CourseDataScene {
     private TimeManagementService time;
     private CourseListScene parent;
     
+    /**
+     * CourseDataScene-luokan konstruktori.
+     * 
+     * @param ui Ohjelman ui-luokkien pääluokka
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-olio
+     * @param parent Edellinen näkymä
+     */
     public CourseDataScene(AjankaytonseurantaUi ui, TimeManagementService tms, CourseListScene parent) {
         this.main = ui;
         this.time = tms;
         this.parent = parent;
     }
     
+    /**
+     * Piirtää kirjautuneen käyttäjän kurssien yhteenvetonäkymän.
+     * 
+     * @return Kurssien yhteenvetonäkymä
+     */
     public GridPane drawCourseDataScene() {
         // Draw a pie chart of logged in user's courses
         GridPane dataScene = new GridPane();

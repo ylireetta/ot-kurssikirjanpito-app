@@ -23,11 +23,22 @@ public class LogInScene {
     AjankaytonseurantaUi main;
     TimeManagementService time;
     
+    /**
+     * LogInScene-luokan konstruktori.
+     * 
+     * @param ui Ohjelman ui-luokkien pääluokka
+     * @param tms Läpi ohjelman käytettävä TimeManagementService-olio
+     */
     public LogInScene(AjankaytonseurantaUi ui, TimeManagementService tms) {
         this.main = ui;
         this.time = tms;
     }
     
+    /**
+     * Piirtää sisäänkirjautumisnäkymän.
+     * 
+     * @return Sisäänkirjautumisnäkymä
+     */
     public BorderPane drawMainScene() {
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -56,9 +67,9 @@ public class LogInScene {
             
             if (time.login(name)) {
                 main.setLoggedInUser(time.getLoggedInUser());
-                main.darCourseListScene(); // Set courselistscene in main private properties
+                main.drawCourseListScene(); // Set courselistscene in main private properties
                 main.getCourseScene().redrawCourseList();
-                main.setScene(main.darCourseListScene());
+                main.setScene(main.drawCourseListScene());
                 main.getMainStage().sizeToScene(); // Resize to fit all components
             } else {
                 info.setText("Käyttäjätunnusta ei löydy kannasta. Luo uusi käyttäjä.");

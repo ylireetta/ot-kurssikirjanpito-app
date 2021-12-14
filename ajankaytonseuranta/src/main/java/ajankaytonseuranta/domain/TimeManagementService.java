@@ -196,6 +196,8 @@ public class TimeManagementService {
      * Poistaa annettua id:tä vastaavan kurssin tietokannasta.
      * 
      * @param courseId Poistettavan kurssin id
+     * 
+     * @see ajankaytonseuranta.dao.ConcreteCourseDao#deleteCourseFromDb(org.bson.types.ObjectId) 
      */
     public void deleteCourse(ObjectId courseId) {
         courseDao.deleteCourseFromDb(courseId);
@@ -205,6 +207,8 @@ public class TimeManagementService {
      * Poistaa kaikki annetun käyttäjän kurssit tietokannasta.
      * 
      * @param user Käyttäjä, jonka kurssit poistetaan
+     * 
+     * @see ajankaytonseuranta.dao.ConcreteCourseDao#deleteAllCoursesForUser(ajankaytonseuranta.domain.User) 
      */
     public void deleteAllCourses(User user) {
         courseDao.deleteAllCoursesForUser(user);

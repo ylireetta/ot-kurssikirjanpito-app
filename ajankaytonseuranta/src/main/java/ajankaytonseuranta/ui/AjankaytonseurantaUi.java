@@ -55,6 +55,11 @@ public class AjankaytonseurantaUi extends Application {
         window.show();
     }
     
+    /**
+     * Vaihtaa ikkunan näkymää.
+     * 
+     * @param sceneToSet Näkymä, johon vaihdetaan
+     */
     public void setScene(Parent sceneToSet) {
         mainStage.getScene().setRoot(sceneToSet);
     }
@@ -71,12 +76,22 @@ public class AjankaytonseurantaUi extends Application {
         return courseScene;
     }
     
+    /**
+     * Muodostaa ohjelman kirjautumisnäkymän.
+     * 
+     * @return Ohjelman kirjautumisnäkymä
+     */
     public BorderPane drawLoginScene() {
         LogInScene login = new LogInScene(this, tmService);
         return login.drawMainScene();
     }
     
-    public GridPane darCourseListScene() {
+    /**
+     * Muodostaa kirjautuneen käyttäjän kurssinäkymän
+     * 
+     * @return Kirjautuneen käyttäjän kurssinäkymä
+     */
+    public GridPane drawCourseListScene() {
         if (courseScene == null) {
             CourseListScene courseScene = new CourseListScene(this, tmService);
             this.courseScene = courseScene;
@@ -84,6 +99,12 @@ public class AjankaytonseurantaUi extends Application {
         return courseScene.drawCourseListScene();
     }
     
+    /**
+     * Muodostaa napin, jonka avulla pääsee palaamaan edelliseen näkymään
+     * 
+     * @param returnScene Näkymä, johon halutaan palata
+     * @return Paluunappi
+     */
     public Button drawReturnButton(Parent returnScene) {
         Button returnBtn = new Button("Palaa takaisin");
         returnBtn.setOnAction((event) -> {
@@ -93,6 +114,11 @@ public class AjankaytonseurantaUi extends Application {
         return returnBtn;
     }
     
+    /**
+     * Päivittää kurssiin käytetyn ajan tietokantaan, jos ohjelma suljetaan epätavallisesti
+     * 
+     * @param selectedCourseId Päivitettävän kurssin id
+     */
     public void updateSpentTimeToDb(ObjectId selectedCourseId) {
         System.out.println(String.format("Päivitetään käytetty aika kurssille id %1$s...", selectedCourseId));
         System.out.println("---------------");
@@ -100,6 +126,9 @@ public class AjankaytonseurantaUi extends Application {
         System.out.println(String.format("Käytetty aika päivitetty kurssille id %1$s.", selectedCourseId));
     }
     
+    /**
+     * Jos sisäänkirjautunut käyttäjä sulkee ohjelman pysäyttämättä aikalaskuria ensin, päivitetään käytetty aika tietokantaan.
+     */
     @Override
     public void stop() {
         // If timer is running and program is closed while user is logged in, update time to db
