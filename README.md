@@ -11,6 +11,7 @@ Monien kurssien yhteydessä opiskelijan odotetaan pitävän kirjaa kurssin paris
 
 ## Releaset
 [Viikko 5](https://github.com/ylireetta/ot-harjoitustyo/releases/tag/viikko5)
+[Viikko 6](https://github.com/ylireetta/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivikomennot
 Koko ohjelman ajamisen pitäisi onnistua seuraavalla komennolla:
