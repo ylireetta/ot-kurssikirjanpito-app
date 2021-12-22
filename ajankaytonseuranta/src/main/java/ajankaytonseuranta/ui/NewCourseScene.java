@@ -41,6 +41,9 @@ public class NewCourseScene {
      */
     public GridPane drawNewCourseScene() {
         GridPane newCourseGrid = new GridPane();
+        newCourseGrid.setHgap(10);
+        newCourseGrid.setVgap(10);
+        newCourseGrid.setPadding(new Insets(10, 10, 10, 10));
         
         Button addCourseBtn = new Button("Lisää kurssi");
         Button returnBtn = main.drawReturnButton(main.drawCourseListScene());
@@ -59,6 +62,7 @@ public class NewCourseScene {
         sb.append("- Anna kurssin opintopisteet positiivisena kokonaislukuna\n\n");
         sb.append("Esim. Ohjelmistotekniikka 5");
         instructions.setText(sb.toString());
+        instructions.getStyleClass().add("instruction-text");
         
         addCourseBtn.setOnAction((event) -> {
             if (!courseName.getText().equals("") && isInteger(courseCredit.getText())) {
@@ -80,7 +84,6 @@ public class NewCourseScene {
         btnBox.setSpacing(10);
         btnBox.setAlignment(Pos.CENTER);
         
-        newCourseGrid.setPadding(new Insets(10, 10, 10, 10));
         newCourseGrid.add(courseInfo, 1, 0);
         newCourseGrid.add(courseNameLabel, 0, 1);
         newCourseGrid.add(courseName, 1, 1);

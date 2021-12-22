@@ -11,6 +11,7 @@ import ajankaytonseuranta.helpers.CourseListHelper;
 import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -18,7 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
 
 public class DeleteCoursesScene {
     private AjankaytonseurantaUi main;
@@ -49,18 +49,22 @@ public class DeleteCoursesScene {
      */
     public GridPane drawDeleteCoursesScene() {
         GridPane deleteScene = new GridPane();
+        deleteScene.setHgap(10);
+        deleteScene.setVgap(10);
+        deleteScene.setPadding(new Insets(10, 10, 10, 10));
         Label info = new Label("Kurssien poistaminen");
-        info.setFont(new Font(32));
+        info.getStyleClass().add("info-label");
+        
         // Populate list of courses for logged in user
         helper.redrawCourseList(courseList);
         helper.populateCourseList(courseList);
         
         Button returnBtn = main.drawReturnButton(parent.drawCourseListScene());
         Button deleteOneBtn = new Button("Poista kurssi");
-        deleteOneBtn.setStyle("-fx-text-fill: #ff0000; ");
+        deleteOneBtn.getStyleClass().add("delete-button");
         deleteOneBtn.setDisable(true);
         Button deleteAllBtn = new Button("Poista kaikki kurssit");
-        deleteAllBtn.setStyle("-fx-text-fill: #ff0000; ");
+        deleteAllBtn.getStyleClass().add("delete-button");
         
         deleteAllBtn.setOnAction((event) -> {
             raiseAlert(true);

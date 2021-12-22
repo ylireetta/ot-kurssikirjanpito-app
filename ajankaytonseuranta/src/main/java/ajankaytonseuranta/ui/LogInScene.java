@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class LogInScene {
@@ -39,12 +40,16 @@ public class LogInScene {
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(10, 10, 10, 10));
         
+        VBox content = new VBox();
+        content.setSpacing(15);
+        
         // Buttons
         TilePane buttonPane = new TilePane();
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setHgap(10);
         
-        Label info = new Label();
+        Label info = new Label("Tervetuloa!");
+        info.getStyleClass().add("info-label");
         
         TextField username = new TextField();
         username.setPromptText("Käyttäjätunnus");
@@ -95,10 +100,9 @@ public class LogInScene {
         
         buttonPane.getChildren().addAll(loginBtn, createNewUserBtn, finishBtn);
         
-        mainLayout.setTop(info);
-        mainLayout.setAlignment(info, Pos.TOP_CENTER);
-        mainLayout.setCenter(username);
-        mainLayout.setBottom(buttonPane);
+        content.getChildren().addAll(info, username, buttonPane);
+        content.setAlignment(Pos.CENTER);
+        mainLayout.setTop(content);
         
         return mainLayout;
     }

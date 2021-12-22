@@ -46,6 +46,7 @@ public class AjankaytonseurantaUi extends Application {
         
         // Setup main scene
         Scene scene = new Scene(mainLayout);
+        scene.getStylesheets().add("/style.css");
         
         window.setTitle("Kurssien ajankäytön seuranta");
         window.setScene(scene);
@@ -106,6 +107,7 @@ public class AjankaytonseurantaUi extends Application {
         Button returnBtn = new Button("Palaa takaisin");
         returnBtn.setOnAction((event) -> {
             mainStage.getScene().setRoot(returnScene);
+            mainStage.sizeToScene();
         });
         
         return returnBtn;

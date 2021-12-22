@@ -8,6 +8,7 @@ package ajankaytonseuranta.ui;
 import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.TimeManagementService;
 import java.util.List;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
@@ -37,6 +38,9 @@ public class CourseRankScene {
      */
     public GridPane drawCourseRankScene() {
         GridPane courseRankGrid = new GridPane();
+        courseRankGrid.setHgap(10);
+        courseRankGrid.setVgap(10);
+        courseRankGrid.setPadding(new Insets(10, 10, 10, 10));
         
         Button returnBtn = main.drawReturnButton(parent.drawCourseListScene());
         

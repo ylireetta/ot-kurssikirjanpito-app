@@ -60,7 +60,7 @@ public class CourseListScene {
      */
     public GridPane drawCourseListScene() {
         GridPane grid = new GridPane();
-        grid.setHgap(10);
+        grid.setHgap(15);
         grid.setVgap(10);
         grid.setPadding(new Insets(10, 10, 10, 10));
         
@@ -105,14 +105,13 @@ public class CourseListScene {
             // Draw new scene for pie chart
             CourseDataScene dataScene = new CourseDataScene(main, time, this);
             main.setScene(dataScene.drawCourseDataScene());
+            main.getMainStage().sizeToScene(); // Resize here so pie chart will be the correct size
         });
         
         deleteCourseBtn.setOnAction((event) -> {
             DeleteCoursesScene delete = new DeleteCoursesScene(main, time, this);
             main.setScene(delete.drawDeleteCoursesScene());
         });
-        
-        grid.add(showDataBtn, 0, 8);
         
         Button startTimerBtn = new Button("Käynnistä ajanotto");
         startTimerBtn.setVisible(false);
@@ -161,19 +160,29 @@ public class CourseListScene {
         
         HBox btnBox = new HBox();
         btnBox.setSpacing(10);
-        btnBox.getChildren().addAll(addCourseBtn, startTimerBtn, stopTimerBtn, deleteCourseBtn);
+        btnBox.getChildren().addAll(addCourseBtn, startTimerBtn, stopTimerBtn);
         
-        VBox topCornerBox = new VBox();
-        topCornerBox.setSpacing(5);
-        topCornerBox.getChildren().addAll(loggedInUsername, logOutBtn, courseRankBtn);
+        // Top right corner
+        VBox userBox = new VBox();
+        userBox.setSpacing(5);
+        userBox.getChildren().addAll(loggedInUsername, logOutBtn);
         
-        grid.add(topCornerBox, 3, 0);
-        grid.setRowSpan(topCornerBox, grid.REMAINING);
-        grid.add(courseList, 1, 1);
+        // Top left corner
+        VBox topLeftBox = new VBox();
+        topLeftBox.setSpacing(5);
+        showDataBtn.setMaxWidth(Double.MAX_VALUE);
+        courseRankBtn.setMaxWidth(Double.MAX_VALUE);
+        deleteCourseBtn.setMaxWidth(Double.MAX_VALUE);
+        topLeftBox.getChildren().addAll(showDataBtn, courseRankBtn, deleteCourseBtn);
         
-        grid.add(btnBox, 1, 2);
-        grid.add(courseInfoFromDb, 1, 4);
-        grid.setColumnSpan(courseInfoFromDb, grid.REMAINING);
+        // Middle
+        VBox courseInfoBox = new VBox();
+        courseInfoBox.setSpacing(5);
+        courseInfoBox.getChildren().addAll(courseList, btnBox, courseInfoFromDb);
+        
+        grid.add(topLeftBox, 0, 0);
+        grid.add(userBox, 3, 0);
+        grid.add(courseInfoBox, 1, 0);
        
         return grid;
     }

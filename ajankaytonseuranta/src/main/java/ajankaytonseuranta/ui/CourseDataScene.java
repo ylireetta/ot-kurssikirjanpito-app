@@ -9,9 +9,10 @@ import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.TimeManagementService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
@@ -41,6 +42,9 @@ public class CourseDataScene {
     public GridPane drawCourseDataScene() {
         // Draw a pie chart of logged in user's courses
         GridPane dataScene = new GridPane();
+        dataScene.setPadding(new Insets(10, 10, 10, 10));
+        dataScene.setHgap(10);
+        dataScene.setVgap(10);
         
         Button returnBtn = main.drawReturnButton(parent.drawCourseListScene());
         parent.redrawCourseList(); // Redraw in case user has started the timer at some point and now returns to this scene
@@ -57,8 +61,10 @@ public class CourseDataScene {
                 FXCollections.observableArrayList(data);
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Ajankäytön jakauma");
-                
-        Label percentLabel = new Label("");
+        
+        TextArea dataArea = new TextArea();
+        dataArea.setPrefHeight(50);
+        dataArea.setEditable(false);
         pieChartData.forEach(oneData ->
                 oneData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, e -> {
                     double total = 0;
@@ -66,19 +72,20 @@ public class CourseDataScene {
                             total += da.getPieValue();
                         }
                     String text = String.format("%1$s %%", Math.round(100 * oneData.getPieValue() / total));
-                    percentLabel.setText(oneData.getName() + " " + text + "\n    Aikaa käytetty " + time.convertTimeSpent(null, oneData.getPieValue()));
+                    dataArea.setText(oneData.getName() + " " + text + "\n    Aikaa käytetty " + time.convertTimeSpent(null, oneData.getPieValue()));
                 })
         );
         
         pieChartData.forEach(oneData ->
                 oneData.getNode().addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, e -> {
-                    percentLabel.setText("");
+                    dataArea.setText("");
                 })
         );
         
-        dataScene.add(chart, 0, 0);
-        dataScene.add(returnBtn, 0, 1);
-        dataScene.add(percentLabel, 3, 0);
+        dataScene.add(returnBtn, 0, 0);
+        dataScene.add(chart, 0, 1);
+        dataScene.add(dataArea, 0, 2);
+        
         return dataScene;
     }
     

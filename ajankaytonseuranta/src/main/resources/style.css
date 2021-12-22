@@ -1,0 +1,58 @@
+.root {
+    -fx-font-family: "Sans-Serif";
+    -fx-background-color: linear-gradient(to bottom, #ddd6f3, #faaca8);
+    -fx-focus-color: #FFE570;
+}
+
+.text-input {
+    -fx-background-color: linear-gradient(to top, #ffafbd, #ef629f);
+    -fx-prompt-text-fill: #5f5e5e;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+    -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+}
+
+.delete-button {
+    -fx-font-weight: bold;
+}
+
+.text-area {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: #FFFFFF
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.combo-box {
+    -fx-border-color: #FFFFFF;
+    -fx-background-color: linear-gradient(to top, #ffafbd, #ef629f);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.instruction-text {
+    -fx-font-style: italic;
+}
+
+.chart-legend {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: #FFFFFF;
+}
+
+.info-label {
+    -fx-font-size: 1.4em;
+}
