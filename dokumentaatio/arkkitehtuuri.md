@@ -9,15 +9,23 @@ Ohjelman rakenne on jaettu kolmeen tasoon, joilla on omat pakettinsa - _ajankayt
 Pakkaus _ajankaytonseuranta.ui_ sisältää JavaFX-käyttöliittymään liittyvät asiat, _ajankaytonseuranta.domain_ paketoi sovelluslogiikan ja _ajankaytonseuranta.dao_ sisältää tietokantayhteydestä huolehtivan toteutuksen.
 
 ## Käyttöliittymä
+Käyttöliittymässä on yhteensä viisi erilaista näkymää:
+* Sisäänkirjautuminen
+* Kurssi- ja ajanottonäkymä
+* Käyttäjän kurssidata
+* Järjestelmän kurssiranking
+* Kurssien poistaminen
+
+Eri näkymien rakentaminen on hajautettu omiin luokkiinsa ajankaytonseuranta.ui-pakkauksessa. Varsinainen rakennustyö tapahtuu luokassa ajankaytonseuranta.ui.AjankaytonseurantaUi.
 
 ## Sovelluslogiikka
-Sovelluksen perimmäistä tarkoitusta palvelevat User- ja Course-luokkien oliot. User-oliot kuvaavat käyttäjiä ja Course-oliot kursseja, joita käyttäjät luovat.
+Sovelluksen perimmäistä tarkoitusta palvelevat _User-_ ja _Course_-luokkien oliot. _User_-oliot kuvaavat käyttäjiä ja _Course_-oliot kursseja, joita käyttäjät luovat.
 
-Sovelluslogiikasta huolehtii TimeManagementService-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. TimeManagementService hallinnoi käyttäjiä ja kursseja erillisten, UserDao- ja CourseDao-rajapinnat toteuttavien luokkion kautta. Nämä tietokantaoperaatioista vastaavat toteutukset injektoidaan TimeManagementService-luokan konstruktorikutsussa, kun sovellus käynnistetään.
+Sovelluslogiikasta huolehtii _TimeManagementService_-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. _TimeManagementService_ hallinnoi käyttäjiä ja kursseja erillisten, _UserDao_- ja _CourseDao_-rajapinnat toteuttavien luokkion kautta. Nämä tietokantaoperaatioista vastaavat toteutukset injektoidaan _TimeManagementService_-luokan konstruktorikutsussa, kun sovellus käynnistetään.
 
 ### Päätoiminnallisuudet
 #### Sisäänkirjautuminen
 Kun käyttäjä on kirjoittanut kirjautumisnäkymän tekstikenttään ennestään olemassa olevan käyttäjätunnuksen ja painaa _Kirjaudu sisään_ -nappia, ohjelman suoritus etenee seuraavan kaavion mukaan:
 ![Sisäänkirjautumisen sekvenssikaavio](/dokumentaatio/kuvat/loginSequenceDiagram.png)
 
-Napin tapahtumankäsittelijään on sidottu TimeManagementService-olion login-metodin kutsu. Tämä metodi tarkistaa ensin, onko syötetty käyttäjätunnus olemassa tietokannassa. Tätä varten TimeManagementService kutsuu UserDao-rajapinnan toteuttavan olion findByUsername-metodia, joka palauttaa syötettyä käyttäjätunnusta vastaavan User-olion tietokannasta. TimeManagementService asettaa kyseisen olion omaan yksityiseen _loggedInUser_-oliomuuttujaansa. Lopuksi käyttöliittymän näkymä vaihdetaan sisäänkirjautuneen käyttäjän kurssinäkymään. Näkymä piirretään CourseListScene-olion metodikutsulla. Käyttöliittymän piirtäminen on jaettu useaan eri luokkaan, eikä tässä kaaviossa oteta LogInScene-luokkaa lukuunottamatta tarkempaa katsausta eri näkymien luomiseen.
+Napin tapahtumankäsittelijään on sidottu _TimeManagementService_-olion _login_-metodin kutsu. Tämä metodi tarkistaa ensin, onko syötetty käyttäjätunnus olemassa tietokannassa. Tätä varten _TimeManagementService_ kutsuu _UserDao_-rajapinnan toteuttavan olion _findByUsername_-metodia, joka palauttaa syötettyä käyttäjätunnusta vastaavan _User_-olion tietokannasta. _TimeManagementService_ asettaa kyseisen olion omaan yksityiseen _loggedInUser_-oliomuuttujaansa. Lopuksi käyttöliittymän näkymä vaihdetaan sisäänkirjautuneen käyttäjän kurssinäkymään. Näkymä piirretään _CourseListScene_-olion metodikutsulla. Käyttöliittymän piirtäminen on jaettu useaan eri luokkaan, eikä tässä kaaviossa oteta _LogInScene_-luokkaa lukuunottamatta tarkempaa katsausta eri näkymien luomiseen.
