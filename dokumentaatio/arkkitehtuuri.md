@@ -16,10 +16,10 @@ Käyttöliittymässä on yhteensä viisi erilaista näkymää:
 * Järjestelmän kurssiranking
 * Kurssien poistaminen
 
-Eri näkymien rakentaminen on hajautettu omiin luokkiinsa ajankaytonseuranta.ui-pakkauksessa. Varsinainen rakennustyö tapahtuu luokassa ajankaytonseuranta.ui.AjankaytonseurantaUi.
+Eri näkymien rakentaminen on hajautettu omiin luokkiinsa _ajankaytonseuranta.ui_-pakkauksessa. Varsinainen rakennustyö tapahtuu luokassa _ajankaytonseuranta.ui.AjankaytonseurantaUi_.
 
 ## Sovelluslogiikka
-Sovelluksen perimmäistä tarkoitusta palvelevat _User-_ ja _Course_-luokkien oliot. _User_-oliot kuvaavat käyttäjiä ja _Course_-oliot kursseja, joita käyttäjät luovat.
+Sovelluksen perimmäistä tarkoitusta palvelevat _User_- ja _Course_-luokkien oliot. _User_-oliot kuvaavat käyttäjiä ja _Course_-oliot kursseja, joita käyttäjät luovat.
 
 Sovelluslogiikasta huolehtii _TimeManagementService_-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. _TimeManagementService_ hallinnoi käyttäjiä ja kursseja erillisten, _UserDao_- ja _CourseDao_-rajapinnat toteuttavien luokkion kautta. Nämä tietokantaoperaatioista vastaavat toteutukset injektoidaan _TimeManagementService_-luokan konstruktorikutsussa, kun sovellus käynnistetään.
 
