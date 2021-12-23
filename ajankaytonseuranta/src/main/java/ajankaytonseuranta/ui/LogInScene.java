@@ -11,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -102,7 +104,12 @@ public class LogInScene {
         
         content.getChildren().addAll(info, username, buttonPane);
         content.setAlignment(Pos.CENTER);
-        mainLayout.setTop(content);
+        mainLayout.setCenter(content);
+        
+        Image img = new Image("/timer.png", 100, 100, false, false);
+        ImageView view = new ImageView(img);
+        mainLayout.setRight(view);
+        
         
         return mainLayout;
     }

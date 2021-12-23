@@ -16,8 +16,13 @@
     -fx-content-display: LEFT;
 }
 
-.delete-button {
+.delete-one-button {
+    -fx-text-fill: red;
     -fx-font-weight: bold;
+}
+
+.delete-all-button {
+    -fx-text-fill: red;
 }
 
 .text-area {

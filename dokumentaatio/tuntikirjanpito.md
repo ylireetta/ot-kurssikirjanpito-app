@@ -25,4 +25,5 @@ su 12.12.|3.5|Käyttöliittymän jakaminen useampaan luokkaan
 ma 13.12.|4|Käyttöliittymän jakaminen useampaan luokkaan, testit, kurssien poistaminen
 ti 14.12.|3|Viikon 6 viimeistelyt
 ke 22.12.|5.5|CSS, piirakkadiagrammin koko-ongelmat
-|yht|67.5|
+to 23.12.|3.5|Kuvien lisääminen ja layout-tappelu
+|yht|71|

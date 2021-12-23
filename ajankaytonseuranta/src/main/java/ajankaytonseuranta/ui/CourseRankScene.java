@@ -8,9 +8,13 @@ package ajankaytonseuranta.ui;
 import ajankaytonseuranta.domain.Course;
 import ajankaytonseuranta.domain.TimeManagementService;
 import java.util.List;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
 public class CourseRankScene {
@@ -62,6 +66,18 @@ public class CourseRankScene {
         
         courseRankGrid.add(returnBtn, 0, 0);
         courseRankGrid.add(courseRank, 0, 1);
+        
+        Image img = new Image("/trophy.png", 100, 100, false, false);
+        ImageView view = new ImageView(img);
+        
+        courseRankGrid.add(view, 1, 1);
+        
+        ColumnConstraints c1 = new ColumnConstraints();
+        c1.setPercentWidth(50);
+        ColumnConstraints c2 = new ColumnConstraints();
+        c2.setPercentWidth(50);
+        c2.setHalignment(HPos.CENTER);
+        courseRankGrid.getColumnConstraints().addAll(c1, c2);
         
         return courseRankGrid;
     }

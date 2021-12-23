@@ -11,12 +11,16 @@ import ajankaytonseuranta.helpers.CourseListHelper;
 import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -61,10 +65,10 @@ public class DeleteCoursesScene {
         
         Button returnBtn = main.drawReturnButton(parent.drawCourseListScene());
         Button deleteOneBtn = new Button("Poista kurssi");
-        deleteOneBtn.getStyleClass().add("delete-button");
+        deleteOneBtn.getStyleClass().add("delete-one-button");
         deleteOneBtn.setDisable(true);
         Button deleteAllBtn = new Button("Poista kaikki kurssit");
-        deleteAllBtn.getStyleClass().add("delete-button");
+        deleteAllBtn.getStyleClass().add("delete-all-button");
         
         deleteAllBtn.setOnAction((event) -> {
             raiseAlert(true);
@@ -99,8 +103,21 @@ public class DeleteCoursesScene {
         btnBox.getChildren().addAll(deleteOneBtn, deleteAllBtn, returnBtn);
         
         deleteScene.add(info, 0, 0);
-        deleteScene.add(courseList, 0, 2);
-        deleteScene.add(btnBox, 0, 3);
+        deleteScene.add(courseList, 0, 1);
+        deleteScene.add(btnBox, 0, 2);
+        
+        Image img = new Image("/trash.png", 100, 100, false, false);
+        ImageView view = new ImageView(img);
+        
+        deleteScene.add(view, 1, 1);
+        deleteScene.setRowSpan(view, deleteScene.REMAINING);
+        
+        ColumnConstraints c1 = new ColumnConstraints();
+        c1.setPercentWidth(50);
+        ColumnConstraints c2 = new ColumnConstraints();
+        c2.setPercentWidth(50);
+        c2.setHalignment(HPos.CENTER);
+        deleteScene.getColumnConstraints().addAll(c1, c2);
         
         return deleteScene;
     }
