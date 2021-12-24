@@ -35,3 +35,49 @@ deactivate CourseDao
 deactivate TimeManagementService
 
 NewCourseScene->CourseListScene: redrawCourseList()
+
+
+
+
+
+
+
+
+title Ajankäytön päivittäminen
+actor User
+
+User->CourseListScene: click startTimerBtn
+
+activate CourseListScene
+CourseListScene->CourseListScene: timerRunning = true
+CourseListScene->CourseListScene: timerStartTime = System.currentTimeMillis()
+deactivate CourseListScene
+
+User->CourseListScene: click stopTimerBtn
+
+activate CourseListScene
+CourseListScene->CourseListScene: timerRunning = false
+
+CourseListScene->TimeManagementService: setTimeSpentForCourse\n(selectedCourse, timerStartTime, \nSystem.currentTimeMillis())
+
+activate TimeManagementService
+TimeManagementService->TimeManagementService: getCourseInfo(courseId)
+TimeManagementService->CourseDao: findCourseById(courseId)
+CourseDao-->TimeManagementService: courseToUpdate
+
+TimeManagementService->CourseDao: setTimeSpentForCourse(courseToUpdate.Id, timeSpent)
+
+deactivate TimeManagementService
+
+activate CourseListScene
+CourseListScene->CourseListScene: refreshCourseInfo()
+CourseListScene->TimeManagementService: getCourseInfo(selectedCourseId)
+activate TimeManagementService
+TimeManagementService->CourseDao: findCourseById(selectedCourseId)
+CourseDao-->TimeManagementService: updatedCourse
+TimeManagementService-->CourseListScene: updatedCourse
+CourseListScene->TimeManagementService: convertTimeSpent(updatedCourse)
+TimeManagementService-->CourseListScene: timeSpentAsMinutesAndSeconds
+deactivate TimeManagementService
+CourseListScene-->CourseListScene: courseInfoAsString
+deactivate CourseListScene
