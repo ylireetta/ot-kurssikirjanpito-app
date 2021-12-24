@@ -10,3 +10,28 @@ UserDao-->-TimeManagementService: User
 deactivate TimeManagementService
 TimeManagementService->UserDao: loggedInuser:= findByUsername("Reetta")
 LogInScene->LogInScene: mainStage.setScene(courseListScene)
+
+
+
+
+
+title Uuden kurssin luominen
+actor User
+
+User->+NewCourseScene: click addCourseBtn
+
+activate NewCourseScene
+NewCourseScene->NewCourseScene: isInteger(credits)
+NewCourseScene-->NewCourseScene: true
+deactivate NewCourseScene
+
+NewCourseScene->TimeManagementService: createCourse(new Course\n(courseName, credits, userId))
+
+activate TimeManagementService
+activate CourseDao
+TimeManagementService->CourseDao: createCourse(course, user)
+CourseDao-->TimeManagementService: true
+deactivate CourseDao
+deactivate TimeManagementService
+
+NewCourseScene->CourseListScene: redrawCourseList()
