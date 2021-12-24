@@ -1,10 +1,10 @@
-[TimeManagementService|-userDao : UserDao;-courseDao : CourseDao;-loggedInUser : User|+createUser() : bool;+userExists() : bool;+login() : bool;+logout() : void;+getLoggedInUser() : User;+getCoursesForLoggedInUser() : List;+createCourse() : bool;+getCourseInfo() : Course;+setTimeSpentForCourse() : void;+convertTimeSpent() : String;+getCourseRankFromDb() : List]1-1[UserDao]
+[TimeManagementService|-userDao : UserDao;-courseDao : CourseDao;-loggedInUser : User|+createUser() : bool;+userExists() : bool;+login() : bool;+logout() : void;+getLoggedInUser() : User;+getCoursesForLoggedInUser() : List;+createCourse() : bool;+getCourseInfo() : Course;+setTimeSpentForCourse() : void;+convertTimeSpent() : String;+getCourseRankFromDb() : List;+deleteCourse() : void;+deleteAllCourses() : void]1-1[UserDao]
 [TimeManagementService]1-1[CourseDao]
 [TimeManagementService]1-loggedInUser 0..1[User]
 [Course|-courseId : ObjectId;-name : String;-credits : int;-timeSpent : long;-userId : ObjectId|+equals() : bool;+getCourseName() : String;+getCourseCredits() : int;+getTimeSpent() : long;+getCourseId() : ObjectId;+setTimeSpent() : void]
-[ConcreteUserDao|-store : Datastore;-userList : List|+createUser() : User;+findByUsername() : User;+getAll() : List]1-*[User|-username : String;-userId : ObjectId|+getUsername() : String;+getUserId() : ObjectId;+equals() : bool]
-[ConcreteCourseDao|-store : Datastore;-courseList : List|-createConnection() : Datastore;+createCourse() : Course;+findCoursesForUser() : List;+findCourseById() : Course;+setTimeSpentForCourse() : void;+getCourseRankFromDb() : List]1-*[Course]
+[ConcreteUserDao|-store : Datastore;-userList : List|-createConnection() : Datastore;-getUsersFromDb() : List;+createUser() : User;+findByUsername() : User;+getAll() : List]1-*[User|-username : String;-userId : ObjectId|+getUsername() : String;+getUserId() : ObjectId;+equals() : bool]
+[ConcreteCourseDao|-store : Datastore;-courseList : List|-createConnection() : Datastore;+createCourse() : Course;+findCoursesForUser() : List;+findCourseById() : Course;+setTimeSpentForCourse() : void;+getCourseRankFromDb() : List;+deleteCourseFromDb() : void;+deleteAllCoursesForUser() : void]1-*[Course]
 
 [<<Interface>>;UserDao|+createUser() : User;+findByUsername() : User;+getAll() : List]^[ConcreteUserDao]
 
-[<<Interface>>;CourseDao|+createCourse() : Course;+findCoursesForUser() : List;+findCourseById() : Course;+setTimeSpentForCourse() : void;+getCourseRankFromDb() : List]^[ConcreteCourseDao]
+[<<Interface>>;CourseDao|+createCourse() : Course;+findCoursesForUser() : List;+findCourseById() : Course;+setTimeSpentForCourse() : void;+getCourseRankFromDb() : List;+deleteCourseFromDb() : void;+deleteAllCoursesForUser() : void]^[ConcreteCourseDao]
