@@ -38,9 +38,9 @@ Napin tapahtumankäsittelijään on sidottu _TimeManagementService_-olion _login
 #### Kurssin luominen
 Uuden kurssin luontinäkymässä käyttäjä syöttää lisättävän kurssin tiedot kenttiin _Kurssin nimi_ ja _Opintopisteet_ ja painaa _Lisää kurssi_ -nappia.
 
-![Uuden kurssin luomisen sekvenssikaavio](/dokumentaatio/kuvat/addCourseSequenceDiagram.png)
-
 Napin tapahtumankäsittelijässä tarkistetaan ensin, onko käyttäjä antanut kurssille nimen, ja onko opintopisteet annettu positiivisena kokonaislukuna. Sen jälkeen kutsutaan _TimeManagementService_-olion _createCourse_-metodia, joka puolestaan kutsuu _CourseDao_-rajapinnan toteuttavan luokan _createCourse_-metodia. Tietokantaoperaatio palauttaa onnistuessaan totuusarvon _true_. Kun kurssi on tallennettu tietokantaan, _NewCourseScene_ kutsuu vielä edellisen näkymän (käyttäjän kurssinäkymä) metodia _redrawCourseList_, jotta uusi kurssi saadaan näkyviin alasvetovalikkoon.
+
+![Uuden kurssin luomisen sekvenssikaavio](/dokumentaatio/kuvat/addCourseSequenceDiagram.png)
 
 #### Ajankäytön päivittäminen
 Käyttäjä painaa _Käynnistä ajanotto_ -nappia kurssinäkymässä. _CourseListScene_-näkymän oliomuuttujiin asetetaan tieto ajanoton aloittamisesta ja aloitusaika millisekunteina. Kun käyttäjä painaa nappia _Lopeta ajanotto_, kutsutaan _TimeManagementService_-olion _setTimeSpentForCourse_-metodia. Päivitettävän kurssin tiedot haetaan tietokannasta _getCourseInfo_- ja _findCourseByid_-metodiakutsuilla, joiden onnistuneen suorittamisen jälkeen _TimeManagementService_ kutsuu _CourseDaon_ metodia _setTimeSpentForCourse_. _CourseListScene_-näkymä päivittää käyttöliittymässä näytettävät tekstimuotoiset tiedot _refreshCourseInfo_-kutsulla, joka kutsuu edelleen _TimeManagementServicen_ _getCourseInfo_-metodia ja se puolestaan _CourseDaon_ _findCourseById_-metodia. Koska kurssiin käytetty aika on talletettu millisekunteina, kutsutaan vielä _TimeManagementService_-olion _convertTimeSpent_-metodia, joka muuntaa millisekunnit minuuteiksi ja sekunneiksi ja muotoilee tuloksen merkkijonoksi. Lopulta _CourseListScene_-näkymä käyttää palautusarvoa osana käyttäjälle näytettävää kurssi-infoa.
