@@ -78,6 +78,7 @@ public class ConcreteCourseDaoTest {
             time = time + 1000;
         }
         
+        // Another user creates a course with the same name, so add spent time together when getting course rank from db
         User anotherUser = fakeUserDao.createUser(new User("Another User"));
         Course sameName = new Course("C5", 5, anotherUser.getUserId());
         dao.createCourse(sameName, anotherUser);
