@@ -48,3 +48,7 @@ _CourseListScene_-näkymä päivittää käyttöliittymässä näytettävät tek
 ![Ajankäytön päivittäminen](/dokumentaatio/kuvat/setTimeSpentSequenceDiagram.png)
 
 ### Kehityskohteet
+* Useampaan kohtaan on jäänyt try-catch-blokkeja, jotka voisi varmasti toteuttaa järkevämmin. Ne voisi mahdollisesti eliminoida joissakin tapauksissa kokonaan, tai ainakin virheenkäsittelyä voisi parantaa ja selkeyttää.
+* Käyttöliittymän asettelu on toteutettu pääosin JavaFX:n GridPanen avulla. Koodissa on käytetty muutamassa kohdassa ikäviä kiertoteitä esim. varmistamaan, että komponentit pysyvät paikoillaan tekstien muuttuessa. Myös kuvien asettelussa on toivomisen varaa. Erilaisten layout-vaihtoehtojen tutkiminen ja soveltaminen olisi paikallaan.
+* Sekvenssikaavioita laatiessani huomasin, että esim. sisäänkirjauduttaessa ja kurssiin käytettyä aikaa päivitettäessä saatetaan tehdä "ylimääräisiä" tietokantakutsuja. Ne eivät varsinaisesti ohjelman tämänhetkisessä toteutuksessa ole ylimääräisiä, mutta voinee pohtia, onko järkevää käydä tietokannan puolella kahteen otteeseen hakemassa kirjautuvan käyttäjän tietoja (ensin tarkistetaan, onko käyttäjä olemassa, ja vasta sen jälkeen käydään hakemassa _User_-olio tietokannasta).
+* Osa tietokantaoperaatioista (esim. kurssiin käytetyn ajan päivittäminen) on void-tyyppisiä. Näissä voisi kenties olla jokin paluuarvo, jonka avulla voitaisiin ilmoittaa käyttäjälle käyttöliittymän puolella tietokantapäivityksen onnistumisesta tai epäonnistumisesta.
