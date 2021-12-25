@@ -27,4 +27,5 @@ ti 14.12.|3|Viikon 6 viimeistelyt
 ke 22.12.|5.5|CSS, piirakkadiagrammin koko-ongelmat
 to 23.12.|3.5|Kuvien lisääminen ja layout-tappelu
 pe 24.12.|2.5|Dokumentaatio
-|yht|73.5|
+la 25.12.|1.5|Dokumentaatio
+|yht|75|
