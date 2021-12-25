@@ -14,7 +14,7 @@ Sekä _ConcreteUserDao_ että _ConcreteCourseDao_ on testattu automaattitestein.
 ### Testauskattavuus
 Testauksen rivikattavuus on 94 % ja haarautumakattavuus 76 %. Jälkimmäinen luku johtuu pääosin koodiin jääneistä try-catch-blokeista, sillä en päässyt testeissäni catch-blokkeihin lainkaan. Lisäksi esimerkiksi equals-metodien yhteydessä jäi muutama haara testaamatta.
 
-![Testikattavuus](/kuvat/testcoverage.jpg)
+![Testikattavuus](/dokumentaatio/kuvat/testcoverage.jpg)
 
 Kaikki käyttöliittymän muodostamiseen liittyvät luokat on jätetty testien ulkopuolelle.
 
