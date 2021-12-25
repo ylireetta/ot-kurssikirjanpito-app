@@ -110,7 +110,7 @@ public class NewCourseScene {
         newCourseGrid.getColumnConstraints().addAll(c1, c2, c3);
         
         // https://stackoverflow.com/questions/59218580/using-a-resource-folder-to-load-images-on-javafx-project-using-inteliij
-        Image img = new Image("/open-book.png", 100, 100, false, false);
+        Image img = new Image("/images/open-book.png", 100, 100, false, false);
         ImageView view = new ImageView(img);
         
         newCourseGrid.add(view, 2, 0);

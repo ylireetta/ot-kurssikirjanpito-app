@@ -106,7 +106,7 @@ public class DeleteCoursesScene {
         deleteScene.add(courseList, 0, 1);
         deleteScene.add(btnBox, 0, 2);
         
-        Image img = new Image("/trash.png", 100, 100, false, false);
+        Image img = new Image("/images/trash.png", 100, 100, false, false);
         ImageView view = new ImageView(img);
         
         deleteScene.add(view, 1, 1);

@@ -78,9 +78,16 @@ public class ConcreteCourseDaoTest {
             time = time + 1000;
         }
         
+        User anotherUser = fakeUserDao.createUser(new User("Another User"));
+        Course sameName = new Course("C5", 5, anotherUser.getUserId());
+        dao.createCourse(sameName, anotherUser);
+        dao.setTimeSpentForCourse(sameName.getCourseId(), 4000);
+        
+        
         List<Course> toplist = dao.getCourseRankFromDb();
         assertTrue(toplist.size() == 5);
         assertTrue(toplist.get(0).getCourseName().equals("C5"));
+        assertTrue(toplist.get(0).getTimeSpent() == 16000);
         assertTrue(toplist.get(1).getCourseName().equals("C4"));
         assertTrue(toplist.get(2).getCourseName().equals("C3"));
         assertTrue(toplist.get(3).getCourseName().equals("C2"));

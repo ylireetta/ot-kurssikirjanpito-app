@@ -67,7 +67,7 @@ public class CourseRankScene {
         courseRankGrid.add(returnBtn, 0, 0);
         courseRankGrid.add(courseRank, 0, 1);
         
-        Image img = new Image("/trophy.png", 100, 100, false, false);
+        Image img = new Image("/images/trophy.png", 100, 100, false, false);
         ImageView view = new ImageView(img);
         
         courseRankGrid.add(view, 1, 1);

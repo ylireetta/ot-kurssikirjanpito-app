@@ -106,7 +106,7 @@ public class LogInScene {
         content.setAlignment(Pos.CENTER);
         mainLayout.setCenter(content);
         
-        Image img = new Image("/timer.png", 100, 100, false, false);
+        Image img = new Image("/images/timer.png", 100, 100, false, false);
         ImageView view = new ImageView(img);
         mainLayout.setRight(view);
         
