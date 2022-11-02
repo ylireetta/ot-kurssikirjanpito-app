@@ -21,7 +21,7 @@ Eri näkymien rakentaminen on hajautettu omiin luokkiinsa _ajankaytonseuranta.ui
 ## Sovelluslogiikka
 Sovelluksen perimmäistä tarkoitusta palvelevat _User_- ja _Course_-luokkien oliot. _User_-oliot kuvaavat käyttäjiä ja _Course_-oliot kursseja, joita käyttäjät luovat.
 
-Sovelluslogiikasta huolehtii _TimeManagementService_-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. _TimeManagementService_ hallinnoi käyttäjiä ja kursseja erillisten, _UserDao_- ja _CourseDao_-rajapinnat toteuttavien luokkion kautta. Nämä tietokantaoperaatioista vastaavat toteutukset injektoidaan _TimeManagementService_-luokan konstruktorikutsussa, kun sovellus käynnistetään.
+Sovelluslogiikasta huolehtii _TimeManagementService_-luokan olio, joka ei suoraan ole vuorovaikutuksessa käyttäjiä ja kursseja mallintavien olioiden kanssa. _TimeManagementService_ hallinnoi käyttäjiä ja kursseja erillisten, _UserDao_- ja _CourseDao_-rajapinnat toteuttavien luokkien kautta. Nämä tietokantaoperaatioista vastaavat toteutukset injektoidaan _TimeManagementService_-luokan konstruktorikutsussa, kun sovellus käynnistetään.
 
 ### Tietojen pysyväistallennus
 Käyttäjät ja kurssit talletetaan MongoDB-tietokantaan _ConcreteUserDao_- ja _ConcreteCourseDao_-luokkien olioiden avulla. Luokat toteuttavat _UserDao_- ja _CourseDao_-rajapinnat, joten varsinaisesta tallennuksesta huolehtivat luokat voidaan tarvittaessa vaihtaa tai niiden toiminnallisuutta muuttaa, kunhan ne vain edelleenkin toteuttavat rajapinnoissa määritellyt metodit.
@@ -41,7 +41,7 @@ Uuden kurssin luontinäkymässä käyttäjä syöttää lisättävän kurssin ti
 ![Uuden kurssin luomisen sekvenssikaavio](/dokumentaatio/kuvat/addCourseSequenceDiagram.png)
 
 #### Ajankäytön päivittäminen
-Käyttäjä painaa _Käynnistä ajanotto_ -nappia kurssinäkymässä. _CourseListScene_-näkymän oliomuuttujiin asetetaan tieto ajanoton aloittamisesta ja aloitusaika millisekunteina. Kun käyttäjä painaa nappia _Lopeta ajanotto_, kutsutaan _TimeManagementService_-olion _setTimeSpentForCourse_-metodia. Päivitettävän kurssin tiedot haetaan tietokannasta _getCourseInfo_- ja _findCourseByid_-metodiakutsuilla, joiden onnistuneen suorittamisen jälkeen _TimeManagementService_ kutsuu _CourseDaon_ metodia _setTimeSpentForCourse_.
+Käyttäjä painaa _Käynnistä ajanotto_ -nappia kurssinäkymässä. _CourseListScene_-näkymän oliomuuttujiin asetetaan tieto ajanoton aloittamisesta ja aloitusaika millisekunteina. Kun käyttäjä painaa nappia _Lopeta ajanotto_, kutsutaan _TimeManagementService_-olion _setTimeSpentForCourse_-metodia. Päivitettävän kurssin tiedot haetaan tietokannasta _getCourseInfo_- ja _findCourseByid_-metodikutsuilla, joiden onnistuneen suorittamisen jälkeen _TimeManagementService_ kutsuu _CourseDaon_ metodia _setTimeSpentForCourse_.
 
 _CourseListScene_-näkymä päivittää käyttöliittymässä näytettävät tekstimuotoiset tiedot _refreshCourseInfo_-kutsulla, joka kutsuu edelleen _TimeManagementServicen_ _getCourseInfo_-metodia ja se puolestaan _CourseDaon_ _findCourseById_-metodia. Koska kurssiin käytetty aika on talletettu millisekunteina, kutsutaan vielä _TimeManagementService_-olion _convertTimeSpent_-metodia, joka muuntaa millisekunnit minuuteiksi ja sekunneiksi ja muotoilee tuloksen merkkijonoksi. Lopulta _CourseListScene_-näkymä käyttää palautusarvoa osana käyttäjälle näytettävää kurssi-infoa.
 
